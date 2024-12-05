@@ -1,101 +1,92 @@
-import Image from "next/image";
+"use client";
+import React, { Suspense, useState, useEffect } from "react";
+import Loading from "./loading/page";
+import Start from "./start/page";
+import Daily from "./daily/page";
+import { useUser } from "@/context/context";
+import { useSearchParams } from "next/navigation";
+import WebApp from "@twa-dev/sdk";
+
+export const dynamic = "force-dynamic";
+
+function HomeContent() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
+  const { setUser, user } = useUser();
+  const searchParams = useSearchParams();
+  const referralCode = searchParams.get("referralCode");
+
+  useEffect(() => {
+    if (currentPage < 3) {
+      const timer = setTimeout(() => {
+        setCurrentPage((prevPage) => prevPage + 1);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [currentPage]);
+
+  const telegramInitData =
+    "query_id=AAElBO5_AAAAACUE7n8cjIn7&user=%7B%22id%22%3A2146305061%2C%22first_name%22%3A%22Crypto%22%2C%22last_name%22%3A%22Dray%22%2C%22username%22%3A%22Habibilord%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FxDxhUL3lIVFxD395BqphdSr4obwbuBmLwEzvXuVGMNA.svg%22%7D&auth_date=1733171445&signature=cL8XAHC71aY4ejLNgBtfKfwD_VY22is6o3Tgmks0WGCc9KzecorzpC9b2eqNc3Gmu8zXVK94C6_2to7xszFFBQ&hash=6d3d8d93ad9eee8a7cd490856006415f1cf97a7e47ea9eaa42b9c06b2c12e57b";
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      //  WebApp.expand();
+      //  const telegramInitData = WebApp.initData;
+
+      if (telegramInitData) {
+        fetch("/api/auth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            initData: telegramInitData,
+            referralCode: referralCode,
+          }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Failed to fetch user data");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            if (data.error) {
+              setError(data.error);
+              console.log(error);
+            } else {
+              console.log("User data:", data);
+              setUser(data.user);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            setError("Failed to fetch user data");
+          });
+      } else {
+        setError("No user data available");
+      }
+    }
+  }, [referralCode]);
+
+  if (!user) {
+    return <Loading />;
+  }
+
+  return (
+    <div>
+      {currentPage === 1 && <Start />}
+      {currentPage === 2 && <Loading />}
+      {currentPage === 3 && <Daily />}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <Suspense fallback={<Loading />}>
+      <HomeContent />
+    </Suspense>
   );
 }
