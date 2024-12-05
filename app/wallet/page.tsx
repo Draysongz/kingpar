@@ -5,8 +5,11 @@ import { FaCaretDown } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa6";
 import Link from "next/link";
 import NavigationBar from "../components/NavigationBar";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 const Wallet = () => {
+
+
   return (
     <Box
       display={"flex"}
@@ -43,10 +46,7 @@ const Wallet = () => {
       >
         <Flex alignItems={'center'}
         justifyContent={'center'} gap={3}>
-            <Image src="../Icons/ton.png" w={'20px'} borderRadius={'10px'}/>
-            <Text color={'#eaeaea'} fontSize={'20px'} fontWeight={800}>UQX...a09</Text>
-
-            <FaCaretDown />
+            <TonConnectButton />
         </Flex>
 
         <Text fontSize={'40px'} fontWeight={800}>K0</Text>

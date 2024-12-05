@@ -11,53 +11,42 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 import { FaRegCheckCircle } from "react-icons/fa";
-import { TonConnectButton } from "@tonconnect/ui-react";
+import { TonConnectButton, useTonConnectModal } from "@tonconnect/ui-react";
+useTonConnectModal
+import { useTonConnect } from "@/hooks/useTonConnect";
 
 
 
 const OnChain = () => {
  
+  const {open} = useTonConnectModal()
+  const {connected} = useTonConnect()
   
   // Initial user balance
-  const [balance, setBalance] = useState(30600);
+  
   const earnRewards = 250;
 
   // Array containing content for boxes
   const boxes = [{ id: 1, title: "Connect TON Wallet" }];
 
   // State for buttons
-  const [buttonStates, setButtonStates] = useState(
-    boxes.map(() => "start") // Initialize all buttons to "start"
-  );
+  const [buttonStates, setButtonStates] = useState("start".toUpperCase()) // Initialize all buttons to "start"
 
   //
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentBoxIndex, setCurrentBoxIndex] = useState<number | null>(null);
-
-  const handleButtonClick = (index: number) => {
-    if (buttonStates[index] === "start") {
-      setCurrentBoxIndex(index); // Set the index of the current box
-      setIsModalOpen(true); // Open the modal
-    } else if (buttonStates[index] === "claim") {
-      setBalance((prevBalance) => prevBalance + earnRewards); // Add rewards
-      setButtonStates((prev) => {
-        const newStates = [...prev];
-        newStates[index] = "done"; // Change to "done"
-        return newStates;
-      });
+  
+  useEffect(()=>{
+    if(connected){
+       setButtonStates("claim".toUpperCase());
     }
-  };
+  },[connected])
 
-  const handleModalConfirm = () => {
-    if (currentBoxIndex !== null) {
-      setButtonStates((prev) => {
-        const newStates = [...prev];
-        newStates[currentBoxIndex] = "claim"; // Change to "claim"
-        return newStates;
-      });
-    }
-    setIsModalOpen(false); // Close the modal
-  };
+  const handleClaim = async ()=>{
+
+  }
+
+
+
+
 
   return (
     <Box display={"grid"} w={"100%"} gap={4}>
@@ -90,69 +79,34 @@ const OnChain = () => {
             borderRadius={"100px"}
             fontSize={"10px"}
             bg={
-              buttonStates[index] === "start"
+              buttonStates.toLowerCase() === "start"
                 ? "#FFFFFF33"
-                : buttonStates[index] === "claim"
+                : connected
                 ? "#32EAFF"
                 : "#EAEAEA33"
             }
             color={
-              buttonStates[index] === "start"
+              buttonStates.toLowerCase() === "start"
                 ? "#EAEAEA"
-                : buttonStates[index] === "claim"
+                : connected
                 ? "#121212"
                 : "#121212"
             }
             _hover={{
               bg:
-                buttonStates[index] === "start"
+                buttonStates.toLowerCase() === "start"
                   ? "#ffffff33"
-                  : buttonStates[index] === "claim"
+                  : connected
                   ? "#32EAFF"
                   : "#EAEAEA33",
             }}
-            onClick={() => handleButtonClick(index)}
-            isDisabled={buttonStates[index] === "done"} // Disable button if "done"
+            onClick={!connected ? open : handleClaim}
+            isDisabled={buttonStates === "done"} // Disable button if "done"
           >
-            {buttonStates[index] === "done" ? (
-              <FaRegCheckCircle />
-            ) : (
-              buttonStates[index].toUpperCase()
-            )}
+            {buttonStates === "done" ? <FaRegCheckCircle /> : buttonStates}
           </Button>
         </Box>
       ))}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        isCentered
-      >
-        <ModalOverlay backdropFilter="blur(10px)" />
-        <ModalContent
-          w={"95%"}
-          alignItems={"center"}
-          bg={"black"}
-          color={"#EAEAEA"}
-          py={10}
-          borderRadius={"20px"}
-          boxShadow={"1px 1px 10px 5px #FFFFFF1A"}
-        >
-          <ModalBody
-            display={"grid"}
-            alignItems={"center"}
-            textAlign={"center"}
-            gap={10}
-          >
-            <Box display={"grid"} onClick={()=> setIsModalOpen(false)} >
-              <TonConnectButton />
-            </Box>
-           
-
-            
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };

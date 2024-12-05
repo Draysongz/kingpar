@@ -28,7 +28,7 @@ const TonConnectUIProvider = dynamic(
 );
 
 const manifestUrl =
-  "https://raw.githubusercontent.com/draysongz/king-para/main/public/manifest.json";
+  "https://raw.githubusercontent.com/draysongz/kingpar/main/public/manifest.json";
 
 export default function RootLayout({
   children,
