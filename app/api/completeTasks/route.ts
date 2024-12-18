@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
-        coins: {
+        points: {
           increment: task.rewards, // Increment user's coins by the task's rewards
         },
       },

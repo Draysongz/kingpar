@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma"; // Adjust path to your Prisma client
 
 interface Task {
-  category: "ONCHAIN" | " SOCIALS" | " ACADEMY" | "FRENS" | " FARMING"
+  category: "ONCHAIN" | "SOCIALS" | "ACADEMY" | "FRENS" | "FARMING"
   title: string;
   rewards: number
 }

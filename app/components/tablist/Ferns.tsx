@@ -1,88 +1,144 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Text, Image, Flex } from "@chakra-ui/react";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { TaskResponse } from "@/app/earn/page";
+import { useUser } from "@/context/context";
 
-const Ferns = () => {
-  // Initial user balance
-  const [balance, setBalance] = useState(30600);
-  const friends = 2;
+const Ferns = ({ task }: { task: TaskResponse[] }) => {
+  const { user, setUser } = useUser();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const [referredUsers, setReferredUsers] = useState<any[]>([]);
 
-  // Array containing content for boxes
-  const boxes = [
-    { id: 1,  limit: "10", earnRewards: 250 },
-    { id: 2,  limit: "100", earnRewards: 10000 },
-    { id: 3,  limit: "50", earnRewards: 3000 },
-    { id: 4,  limit: "25", earnRewards: 1000 },
-  ];
+  // State for tasks
+  const [tasks, setTasks] = useState<TaskResponse[]>([]);
 
-  // State for buttons
-  const [buttonStates, setButtonStates] = useState(
-    boxes.map(() => "start") // Initialize all buttons to "start"
-  );
+  // Update tasks when `task` prop changes
+  useEffect(() => {
+    if (task) {
+      setTasks(task);
+    }
+  }, [task]);
+    const fetchReferredUsers = async (userId: string) => {
+        try {
+          const response = await fetch(`/api/getReferredUsers?userId=${userId}`);
+  
+          if (!response.ok) {
+            throw new Error("Failed to fetch referred users");
+          }
+  
+          const data = await response.json();
+          setReferredUsers(data.referredUsers);
+          console.log(data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+  
+      useEffect(() => {
+        if (user) {
+          fetchReferredUsers(user.telegramId);
+        }
+      }, [user]);
 
-  const handleButtonClick = (index: number) => {
-    setButtonStates((prev) => {
-      const newStates = [...prev];
-      if (newStates[index] === "start") {
-        newStates[index] = "claim"; // Change to "claim" after "start"
-      } else if (newStates[index] === "claim") {
-        setBalance((prevBalance) => prevBalance + boxes[index].earnRewards); // Add 50 points to balance
-        newStates[index] = "done"; // Change to "done" after claiming
+  // Function to update the claimed status of a task
+  const updateTaskClaimed = async (taskId: string) => {
+    try {
+      const response = await fetch(`/api/completeTasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user?.id, taskId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to claim task");
       }
-      return newStates;
-    });
+
+      const { task: updatedTask, user: updatedUser } = await response.json();
+      setTasks((prevTasks) =>
+        prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
+      );
+      setUser(updatedUser);
+    } catch (error) {
+      console.error("Error claiming task:", error);
+    }
+  };
+
+  // Determine the button label
+  const getButtonLabel = (claimed: boolean) => {
+    if (claimed) return <FaRegCheckCircle />;
+    return "Claim".toUpperCase();
+  };
+
+   const canClaimTask = (task: TaskResponse) => {
+     if (task.title === "Invite 10 frens") {
+       return referredUsers.length >= 10; // Use the dynamic referral count
+     } else if (task.title === "Invite 25 frens") {
+       return referredUsers.length >= 10;
+     } else if (task.title === "Invite 50 frens") {
+       return referredUsers.length >= 10;
+     } else if (task.title === "Invite 100 frens") {
+       return referredUsers.length >= 10;
+     }
+     return true;
+   };
+
+  // Button click handler
+  const handleButtonClick = async (task: TaskResponse) => {
+    if (!task.claimed) {
+      await updateTaskClaimed(task.id);
+    }
   };
 
   return (
-      <Box display={'grid'} w={'100%'} gap={4}>
-        {boxes.map((box, index) => (
+    <Box display={"grid"} w={"100%"} gap={4}>
+      {tasks && tasks.length > 0 ? (
+        tasks.map((task, index) => (
           <Box
-            display={'flex'}
-            key={box.id}
+            display={"flex"}
+            key={task.id}
             borderRadius="md"
             p={4}
             boxShadow="sm"
             width="100%"
             h={"60px"}
-            alignItems={'center'}
-            justifyContent={'space-between'}
+            alignItems={"center"}
+            justifyContent={"space-between"}
           >
-            <Flex gap={3} alignItems={'center'}>
-            <Image src='../Icons/earnIcon.png' alt={`Box ${box.id}`} w={'30px'} />
-            <Box>
-            <Text fontSize={'15px'}>Invite {box.limit} frens</Text>
-            <Text fontSize={'10px'}> {friends} / {box.limit} , +{box.earnRewards} KP</Text>
-            </Box>
+            <Flex gap={3} alignItems={"center"}>
+              <Image
+                src={task.imagePath || "../Icons/earnIcon.png"}
+                alt={task.title}
+                w={"30px"}
+              />
+              <Box>
+                <Text fontSize={"15px"}>{task.title}</Text>
+                <Text fontSize={"10px"}>+{task.rewards} KP</Text>
+              </Box>
             </Flex>
             <Button
-              width="57px" height={'30px'} borderRadius={'100px'} fontSize={'10px'}
-              bg={
-                buttonStates[index] === "start"
-                  ? "#FFFFFF33"
-                  : buttonStates[index] === "claim"
-                  ? "#32EAFF"
-                  : "#EAEAEA33"
-              }
-              color={
-                buttonStates[index] === "start"
-                  ? "#EAEAEA"
-                  : buttonStates[index] === "claim"
-                  ? "#121212"
-                  : "#121212"
-              }
-              _hover={{ bg: buttonStates[index] === "start" ? "#ffffff33" : buttonStates[index] === "claim" ? "#32EAFF" : "#EAEAEA33"}}
-              onClick={() => handleButtonClick(index)}
-              isDisabled={buttonStates[index] === "done"} // Disable button if "done"
+              width="57px"
+              height={"30px"}
+              borderRadius={"100px"}
+              fontSize={"10px"}
+              bg={task.claimed ? "#EAEAEA33" : "#32EAFF"}
+              color={task.claimed ? "#121212" : "#FFFFFF"}
+              _hover={{
+                bg: task.claimed ? "#EAEAEA33" : "#32EAFF",
+              }}
+              onClick={() => handleButtonClick(task)}
+              isDisabled={task.claimed || !canClaimTask(task)}
             >
-              {buttonStates[index] === "done" ? (
-                <FaRegCheckCircle />
-              ) : (
-                buttonStates[index].toUpperCase()
-              )}
+              {getButtonLabel(task.claimed)}
             </Button>
           </Box>
-        ))}
-      </Box>
+        ))
+      ) : (
+        <Text>No tasks available.</Text>
+      )}
+    </Box>
   );
 };
 

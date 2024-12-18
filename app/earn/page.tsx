@@ -19,8 +19,65 @@ import Socials from "../components/tablist/Socials";
 import Academy from "../components/tablist/Academy";
 import Ferns from "../components/tablist/Ferns";
 import Farming from "../components/tablist/Farming";
+import { useUser } from "@/context/context";
+
+export interface TaskResponse {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  imagePath?: string | null;
+  rewards: number;
+  taskUrl?: string | null;
+  status: string;
+  claimed: boolean
+
+}
 
 const Earn = () => {
+  const {user, setUser} = useUser()
+  // const [tasks, setTasks] = useState<TaskResponse[]>([]);
+    const [onChainTasks, setOnChainTasks] = useState<TaskResponse[]>([]);
+    // const [socialTasks, setSocialTasks] = useState<TaskResponse[]>([]);
+    // const [academyTasks, setAcademyTasks] = useState<TaskResponse[]>([]);
+    const [frensTasks, setFrensTasks] = useState<TaskResponse[]>([]);
+    // const [farmingTasks, setFarmingTasks] = useState<TaskResponse[]>([]);
+
+
+    async function fetchTasks(userId: string): Promise<TaskResponse[]> {
+      const response = await fetch(`/api/getTasks?userId=${userId}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch tasks");
+      }
+
+      return response.json();
+    }
+
+ useEffect(() => {
+   const loadTasks = async () => {
+     if (!user) return;
+
+     try {
+       const tasksData = await fetchTasks(user.id);
+       console.log(tasksData);
+
+      //  // Categorize tasks
+      //  setTasks(tasksData);
+
+       setOnChainTasks(tasksData.filter((task) => task.category === "ONCHAIN"));
+      //  setSocialTasks(tasksData.filter((task) => task.category === "SOCIALS"));
+      //  setAcademyTasks(tasksData.filter((task) => task.category === "ACADEMY"));
+       setFrensTasks(tasksData.filter((task) => task.category === "FRENS"));
+      //  setFarmingTasks(tasksData.filter((task) => task.category === "FARMING"));
+     } catch (error) {
+       console.error("Error loading tasks:", error);
+     }
+   };
+
+   loadTasks();
+ }, [user]);
+
   return (
     <Box
       display={"flex"}
@@ -122,7 +179,7 @@ const Earn = () => {
               <NewTab />
             </TabPanel>
             <TabPanel>
-              <OnChain />
+              <OnChain task={onChainTasks} />
             </TabPanel>
             <TabPanel>
               <Socials />
@@ -131,7 +188,7 @@ const Earn = () => {
               <Academy />
             </TabPanel>
             <TabPanel>
-              <Ferns />
+              <Ferns task={frensTasks}/>
             </TabPanel>
             <TabPanel>
               <Farming />
