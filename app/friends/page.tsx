@@ -5,29 +5,56 @@ import { Box, Flex, Image, Text, Button, Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  useDisclosure, } from "@chakra-ui/react";
+  useDisclosure, useClipboard } from "@chakra-ui/react";
 import NavigationBar from "../components/NavigationBar";
+import { initUtils } from "@telegram-apps/sdk";
+import { useUser } from "@/context/context";
 
-const FriendList = [
-  {
-    id: 1,
-    name: "K3nny GZ" ,
-    friendPoints: 8946 ,
-  },
-  {
-    id: 2,
-    name: "Al3hemyc" ,
-    friendPoints: 8946 ,
-  },
-]
+
+
 
 
 const Frens = () => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const [inviteEarnings, setInviteEarnings] = useState(0);
-  const [buttonState, setButtonState] = useState("claim");
-  const [timer, setTimer] = useState(8 * 60 * 60);
-  const [FriendPoints, setFriendPoint] = useState(8946)
+    const { user } = useUser();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [referredUsers, setReferredUsers] = useState<any[]>([]);
+    const { onCopy,  hasCopied } = useClipboard(
+      `https://t.me/kingpar_bot?start=${user?.telegramId}`
+    );
+    const handleInviteFriend = () => {
+      const utils = initUtils();
+      const inviteLink = `https://t.me/kingpar_bot?start=${user?.telegramId}`;
+      const shareText = `Join me on this awesome Telegram mini app!`;
+      const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(
+        inviteLink
+      )}&text=${encodeURIComponent(shareText)}`;
+      utils.openTelegramLink(fullUrl);
+    };
+
+    const fetchReferredUsers = async (userId: string) => {
+      try {
+        const response = await fetch(`/api/getReferredUsers?userId=${userId}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch referred users");
+        }
+
+        const data = await response.json();
+        setReferredUsers(data.referredUsers);
+        console.log(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    useEffect(() => {
+      if (user) {
+        fetchReferredUsers(user.telegramId);
+      }
+    }, [user]);
+
+
 
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600);
@@ -35,41 +62,11 @@ const Frens = () => {
     return `${hrs}h ${mins}m`;
   };
 
-  //
-  useEffect(() => {
-    if (buttonState === "farming" && timer > 0) {
-      const interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
 
-      return () => clearInterval(interval); // Cleanup interval
-    }
 
-    if (timer === 0) {
-      setButtonState("claim");
-    }
-  }, [buttonState, timer]);
 
-  //
-
-  const handleClaim = () => {
-    setInviteEarnings(inviteEarnings);
-    setButtonState("farming");
-  };
-
-  const handleStartFarming = () => {
-    setButtonState("farming");
-  };
-
-  useEffect (() => {
-    const earnings = FriendList.reduce(
-      (total, friend) => total + friend.friendPoints * 0.1, 0
-    );
-    setInviteEarnings(earnings);
-  }, [FriendList])
-
-    return(
-        <Box
+    return (
+      <Box
         display={"flex"}
         flexDirection={"column"}
         bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
@@ -93,218 +90,208 @@ const Frens = () => {
         }}
       >
         <Flex
-        direction={"column"}
-        gap={32}
-        width="100%"
-        alignItems="center"
-        justifyContent={'space-between'}
-        zIndex="1"
-        py={4}
-        pb={32}
-      >
-        <Flex direction={'column'} alignItems={'center'} gap={5}>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          gap={2}
-          alignItems={"center"}
-          justifyContent={"center"}
-          mt={10}
+          direction={"column"}
+          gap={32}
+          width="100%"
+          alignItems="center"
+          justifyContent={"space-between"}
+          zIndex="1"
+          py={4}
+          pb={32}
         >
-          <Image src="../Icons/frens.png" w={'100px'}/>
-          <Text
-            fontSize={"40px"}
-            color={"#ffffff"}
-            fontWeight={700}
-            letterSpacing={"2.5px"}
-          >
-            Invite Frens
-          </Text>
-        </Box>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          gap={4}
-          alignItems={"center"}
-          justifyContent={"center"}
-          w={'90%'}
-          border={'4px solid #EAEAEA33'}
-          py={'30px'}
-        >
-            <Text fontSize={"40px"}
-            color={"#ffffff"}
-            fontWeight={700}
-            letterSpacing={"2px"}>
-                K {inviteEarnings.toFixed(2)}
-            </Text>
-          {buttonState === "claim" && (
-          <Button 
-          w={'60%'}
-          h={'40px'}
-          borderRadius={'100px'}
-          p={'10px 10px'}
-          bg={FriendList.length === 0 ? "#E1E1E133" : '#32EAFF'}
-          color={'#121212'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          textAlign={'center'}
-          gap={2}
-          onClick={handleClaim}
-          _hover={{bg: FriendList.length === 0 ? "#E1E1E133" : '#32EAFF'}}
-          isDisabled={FriendList.length === 0}
-          >
-            <Text fontSize={'10px'} fontWeight={700}>
-              Claim
-            </Text>
-          </Button>
-          )}
-          {buttonState === "farming" && (
-          <Button 
-          display={'flex'}
-          isDisabled
-          w={'60%'}
-          h={'40px'}
-          borderRadius={'100px'}
-          p={'15px 10px'}
-          bg={'#E1E1E133'}
-          color={'#EAEAEA'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-          textAlign={'center'}
-          onClick={handleStartFarming}
-          _hover={{bg: "#E1E1E133"}}
-          >
-            <Flex alignItems={'center'} justifyContent={'center'} flex={1} gap={2}>
-            <Text fontSize={'15px'} fontWeight={800} mt={-1}>
-              Claim in {formatTime(timer)}
-            </Text>
-            </Flex>
-          </Button>
-          )}
-          
-        </Box>
-        <Text color={'#eaeaea'} fontSize={'15px'} textAlign={'center'} w={'81%'} fontWeight={500}>
-        Score 10% from buddies +2.5% from their referrals.
-        Get a ticket play pass for each fren.
-        </Text>
-
-        <Box width={"90%"} display={'grid'} gap={5}>
-          {FriendList.map((friend) => (
+          <Flex direction={"column"} alignItems={"center"} gap={5}>
             <Box
-            display={'flex'}
-            key={friend.id}
-            borderRadius="md"
-            p={4}
-            boxShadow="sm"
-            width="100%"
-            h={"60px"}
-            alignItems={'center'}
-            justifyContent={'space-between'}
-          >
-            <Flex gap={3} alignItems={'center'}>
-            <Image src='../Icons/earnIcon.png' alt={`Box ${friend.id}`} w={'30px'} />
-            <Box>
-            <Text fontSize={'15px'}>{friend.name}</Text>
-            <Text fontSize={'10px'}>0</Text>
+              display={"flex"}
+              flexDirection={"column"}
+              gap={2}
+              alignItems={"center"}
+              justifyContent={"center"}
+              mt={10}
+            >
+              <Image src="../Icons/frens.png" w={"100px"} />
+              <Text
+                fontSize={"40px"}
+                color={"#ffffff"}
+                fontWeight={700}
+                letterSpacing={"2.5px"}
+              >
+                Invite Frens
+              </Text>
             </Box>
-            </Flex>
-            <Button
-              width="88px" height={'40px'} borderRadius={'100px'} fontSize={'10px'} bg={'#FFFFFF33'} color={'#EAEAEA'} p={'10px'}>
-                8,946 KP
-            </Button>
-          </Box>
-          )
-          )}
 
-        </Box>
-        </Flex>
+            <Text
+              color={"#eaeaea"}
+              fontSize={"15px"}
+              textAlign={"center"}
+              w={"81%"}
+              fontWeight={500}
+            >
+              Score 10% from buddies +2.5% from their referrals. Get a ticket
+              play pass for each fren.
+            </Text>
 
-        <Button
-        bg={'#E1E1E1'}
-        w={'90%'}
-        borderRadius={'10px'}
-        h={'50px'}
-        display={'flex'}
-        gap={3}
-        onClick={onOpen}>
-          <Image src="../Icons/frens.png" w={'30px'}/>
-          <Text color={'#001100'} fontSize={'15px'}>Invite a Fren</Text>
-        </Button>
+            <Box width={"90%"} display={"grid"} gap={5}>
+              {referredUsers &&
+                referredUsers.length > 0 &&
+                referredUsers.map((user, index) => {
+                  return (
+                    <Box
+                      display={"flex"}
+                      key={user.id}
+                      borderRadius="md"
+                      p={4}
+                      boxShadow="sm"
+                      width="100%"
+                      h={"60px"}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
+                    >
+                      <Flex gap={3} alignItems={"center"}>
+                        <Image
+                          src="../Icons/earnIcon.png"
+                          alt={`Box ${user.id}`}
+                          w={"30px"}
+                        />
+                        <Box>
+                          <Text fontSize={"15px"}>{user.username}</Text>
+                        </Box>
+                      </Flex>
+                      <Button
+                        width="88px"
+                        height={"40px"}
+                        borderRadius={"100px"}
+                        fontSize={"10px"}
+                        bg={"#FFFFFF33"}
+                        color={"#EAEAEA"}
+                        p={"10px"}
+                      >
+                        {user.points} KP
+                      </Button>
+                    </Box>
+                  );
+                })}
+
+              {referredUsers && referredUsers.length <= 0 && (
+                <Box
+                  width={"100%"}
+                  h={"100%"}
+                  bg={"#12161E"}
+                  borderRadius={"10px"}
+                  fontSize={"14px"}
+                  fontWeight={500}
+                  display={"flex"}
+                  mx={"auto"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  color={"#f2f2f2"}
+                  p={8}
+                >
+                  You haven’t invited anyone yet
+                </Box>
+              )}
+            </Box>
+          </Flex>
+
+          <Button
+            bg={"#E1E1E1"}
+            w={"90%"}
+            borderRadius={"10px"}
+            h={"50px"}
+            display={"flex"}
+            gap={3}
+            onClick={onOpen}
+          >
+            <Image src="../Icons/frens.png" w={"30px"} />
+            <Text color={"#001100"} fontSize={"15px"}>
+              Invite a Fren
+            </Text>
+          </Button>
         </Flex>
         <NavigationBar />
 
-
         {/*  */}
         <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay backdropFilter="blur(10px)" />
-        <DrawerContent bg={"#000000"} alignItems={"center"} borderTopRadius={'30px'} py={'20px'}>
-          <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"}>
-            Invite a fren
-          </DrawerHeader>
-          <DrawerBody display={"flex"} flexDirection={"column"} gap={3}>
-            <Flex w={'90vw'} h={'50vh'} bg={'#ffffff'}
-            justifyContent={'center'} alignItems={'center'}>
-              <Image src="../Icons/qr-code.png"/>
-            </Flex>
+          <DrawerOverlay backdropFilter="blur(10px)" />
+          <DrawerContent
+            bg={"#000000"}
+            alignItems={"center"}
+            borderTopRadius={"30px"}
+            py={"20px"}
+          >
+            <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"}>
+              Invite a fren
+            </DrawerHeader>
+            <DrawerBody display={"flex"} flexDirection={"column"} gap={3}>
+              <Flex
+                w={"90vw"}
+                h={"50vh"}
+                bg={"#ffffff"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Image src="../Icons/qr-code.png" />
+              </Flex>
 
-            <Button
-              w={"100%"}
-              h={"40px"}
-              borderRadius={"10px"}
-              p={"15px 10px"}
-              bg={"#ffffff"}
-              color={"001100"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              textAlign={"center"}
-              gap={2}
-              _hover={{bg: "#ffffff"}}
-            >
-              <Text fontSize={"14px"} fontWeight={600}>
-                Send
-              </Text>
-            </Button>
-            <Button
-              w={"100%"}
-              h={"40px"}
-              borderRadius={"10px"}
-              p={"15px 10px"}
-              bg={"transparent"}
-              border={'1px solid #eaeaea'}
-              color={"#EAEAEA"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              textAlign={"center"}
-              gap={2}
-              _hover={{bg: "transparent"}}
-            >
-              <Text fontSize={"14px"} fontWeight={600}>
-                Copy Link
-              </Text>
-            </Button>
-            <Button
-              w={"100%"}
-              h={"40px"}
-              borderRadius={"10px"}
-              p={"15px 10px"}
-              bg={"#E1E1E11A"}
-              color={"#EAEAEA"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              textAlign={"center"}
-              gap={2}
-              _hover={{bg: "#E1E1E11A"}}
-              onClick={onClose}
-            >
-              <Text fontSize={"14px"} fontWeight={600}>
-                Close
-              </Text>
-            </Button>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-        </Box>
-    )
+              <Button
+                w={"100%"}
+                h={"40px"}
+                borderRadius={"10px"}
+                p={"15px 10px"}
+                bg={"#ffffff"}
+                color={"001100"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                textAlign={"center"}
+                gap={2}
+                _hover={{ bg: "#ffffff" }}
+                onClick={handleInviteFriend}
+              >
+                <Text fontSize={"14px"} fontWeight={600}>
+                  Send
+                </Text>
+              </Button>
+              <Button
+                w={"100%"}
+                h={"40px"}
+                borderRadius={"10px"}
+                p={"15px 10px"}
+                bg={"transparent"}
+                border={"1px solid #eaeaea"}
+                color={"#EAEAEA"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                textAlign={"center"}
+                gap={2}
+                _hover={{ bg: "transparent" }}
+                onClick={onCopy}
+              >
+                <Text fontSize={"14px"} fontWeight={600}>
+                  {hasCopied ? "Copied" : "Copy Link"}
+                </Text>
+              </Button>
+              <Button
+                w={"100%"}
+                h={"40px"}
+                borderRadius={"10px"}
+                p={"15px 10px"}
+                bg={"#E1E1E11A"}
+                color={"#EAEAEA"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                textAlign={"center"}
+                gap={2}
+                _hover={{ bg: "#E1E1E11A" }}
+                onClick={onClose}
+              >
+                <Text fontSize={"14px"} fontWeight={600}>
+                  Close
+                </Text>
+              </Button>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Box>
+    );
 
 }
 

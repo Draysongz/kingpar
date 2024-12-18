@@ -50,17 +50,27 @@ model Referral {
   @@map("referrals")
 }
 
-model Task {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  taskType     String   // daily or social
-  title        String
-  imagePath    String?
-  rewards      Int    //xp: 100
-  taskUrl      String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+enum TaskCategory {
+  ONCHAIN
+  ACADEMY
+  FRENS
+  FARMING
+  SOCIALS
+}
 
-  userTasks   UserTask[] 
+model Task {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  category    TaskCategory // ONCHAIN, ACADEMY, etc.
+  title       String
+  description String?     // Additional details about the task
+  imagePath   String?     // Optional image
+  rewards     Int
+  taskUrl     String?     // Link to complete the task
+  status      String?      @default("pending") // active, inactive
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  userTasks   UserTask[] // Relation with user tasks
 }
 
 model UserTask {
@@ -78,9 +88,3 @@ model UserTask {
 }
 
 
-enum TaskCategory {
-  Onchain
-  Socials
-  Academy
-  Frens
-}
