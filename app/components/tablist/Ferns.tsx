@@ -69,7 +69,7 @@ const Ferns = ({ task }: { task: TaskResponse[] }) => {
   // Determine the button label
   const getButtonLabel = (claimed: boolean) => {
     if (claimed) return <FaRegCheckCircle />;
-    return "Claim".toUpperCase();
+    return "Claim";
   };
 
    const canClaimTask = (task: TaskResponse) => {
@@ -93,14 +93,14 @@ const Ferns = ({ task }: { task: TaskResponse[] }) => {
   };
 
   return (
-    <Box display={"grid"} w={"100%"} gap={4}>
+    <Box display={"grid"} w={"100%"} gap={4} fontFamily={'body'}>
       {tasks && tasks.length > 0 ? (
         tasks.map((task, index) => (
           <Box
             display={"flex"}
             key={task.id}
             borderRadius="md"
-            p={4}
+            p={2}
             boxShadow="sm"
             width="100%"
             h={"60px"}
@@ -114,8 +114,8 @@ const Ferns = ({ task }: { task: TaskResponse[] }) => {
                 w={"30px"}
               />
               <Box>
-                <Text fontSize={"15px"}>{task.title}</Text>
-                <Text fontSize={"10px"}>+{task.rewards} KP</Text>
+                <Text fontSize={"15px"} fontWeight={600}>{task.title}</Text>
+                <Text fontSize={"10px"} fontWeight={500}>+{task.rewards} KP</Text>
               </Box>
             </Flex>
             <Button
@@ -123,6 +123,8 @@ const Ferns = ({ task }: { task: TaskResponse[] }) => {
               height={"30px"}
               borderRadius={"100px"}
               fontSize={"10px"}
+              fontFamily='StretchPro'
+              fontWeight={400}
               bg={task.claimed ? "#EAEAEA33" : "#32EAFF"}
               color={task.claimed ? "#121212" : "#FFFFFF"}
               _hover={{

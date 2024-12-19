@@ -13,7 +13,8 @@ const Points = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
+      fontFamily={'body'}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -86,7 +87,7 @@ const Points = () => {
             <Flex gap={3} alignItems={'center'}>
             <Image src='../Icons/earnIcon.png' w={'30px'} />
             <Box>
-            <Text fontSize={'15px'}>Kingpar Points</Text>
+            <Text fontSize={'15px'} fontWeight={600}>Kingpar Points</Text>
             <Text fontSize={'10px'}>+250KP</Text>
             </Box>
             </Flex>

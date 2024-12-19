@@ -69,7 +69,7 @@ const Frens = () => {
       <Box
         display={"flex"}
         flexDirection={"column"}
-        bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+        bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
         bgRepeat={"no-repeat"}
         bgPosition={"center"}
         bgSize={"cover"}
@@ -78,6 +78,7 @@ const Frens = () => {
         alignItems={"center"}
         textColor={"white"}
         overflowY={"scroll"}
+        fontFamily={'body'}
         _before={{
           content: '""',
           position: "absolute",
@@ -110,10 +111,9 @@ const Frens = () => {
             >
               <Image src="../Icons/frens.png" w={"100px"} />
               <Text
-                fontSize={"40px"}
+                fontSize={"27px"}
                 color={"#ffffff"}
                 fontWeight={700}
-                letterSpacing={"2.5px"}
               >
                 Invite Frens
               </Text>
@@ -161,6 +161,8 @@ const Frens = () => {
                         height={"40px"}
                         borderRadius={"100px"}
                         fontSize={"10px"}
+                        fontFamily='StretchPro'
+                        fontWeight={400}
                         bg={"#FFFFFF33"}
                         color={"#EAEAEA"}
                         p={"10px"}
@@ -194,7 +196,9 @@ const Frens = () => {
 
           <Button
             bg={"#E1E1E1"}
-            w={"90%"}
+            w={"60%"}
+            fontFamily="StretchPro"
+            fontWeight={400}
             borderRadius={"10px"}
             h={"50px"}
             display={"flex"}
@@ -202,7 +206,7 @@ const Frens = () => {
             onClick={onOpen}
           >
             <Image src="../Icons/frens.png" w={"30px"} />
-            <Text color={"#001100"} fontSize={"15px"}>
+            <Text color={"#001100"} fontSize={"10px"}>
               Invite a Fren
             </Text>
           </Button>
@@ -211,17 +215,18 @@ const Frens = () => {
 
         {/*  */}
         <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay backdropFilter="blur(10px)" />
+          <DrawerOverlay backdropFilter="blur(10px)" 
+          bg={'transparent'}/>
           <DrawerContent
             bg={"#000000"}
             alignItems={"center"}
             borderTopRadius={"30px"}
             py={"20px"}
           >
-            <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"}>
+            <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"} fontFamily={'body'}>
               Invite a fren
             </DrawerHeader>
-            <DrawerBody display={"flex"} flexDirection={"column"} gap={3}>
+            <DrawerBody display={"flex"} flexDirection={"column"} gap={3} alignItems={'center'}>
               <Flex
                 w={"90vw"}
                 h={"50vh"}
@@ -233,7 +238,7 @@ const Frens = () => {
               </Flex>
 
               <Button
-                w={"100%"}
+                w={"60%"}
                 h={"40px"}
                 borderRadius={"10px"}
                 p={"15px 10px"}
@@ -244,14 +249,15 @@ const Frens = () => {
                 textAlign={"center"}
                 gap={2}
                 _hover={{ bg: "#ffffff" }}
+                fontFamily='StretchPro'
                 onClick={handleInviteFriend}
               >
-                <Text fontSize={"14px"} fontWeight={600}>
+                <Text fontSize={"10px"} fontWeight={400}>
                   Send
                 </Text>
               </Button>
               <Button
-                w={"100%"}
+                w={"60%"}
                 h={"40px"}
                 borderRadius={"10px"}
                 p={"15px 10px"}
@@ -262,10 +268,11 @@ const Frens = () => {
                 justifyContent={"center"}
                 textAlign={"center"}
                 gap={2}
+                fontFamily='StretchPro'
                 _hover={{ bg: "transparent" }}
                 onClick={onCopy}
               >
-                <Text fontSize={"14px"} fontWeight={600}>
+                <Text fontSize={"10px"} fontWeight={400}>
                   {hasCopied ? "Copied" : "Copy Link"}
                 </Text>
               </Button>
@@ -280,10 +287,11 @@ const Frens = () => {
                 justifyContent={"center"}
                 textAlign={"center"}
                 gap={2}
+                fontFamily='StretchPro'
                 _hover={{ bg: "#E1E1E11A" }}
                 onClick={onClose}
               >
-                <Text fontSize={"14px"} fontWeight={600}>
+                <Text fontSize={"10px"} fontWeight={400}>
                   Close
                 </Text>
               </Button>

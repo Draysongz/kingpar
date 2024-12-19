@@ -14,12 +14,13 @@ const Wallet = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
       width={"100vw"}
       height={"100vh"}
+      fontFamily={'body'}
       alignItems={"center"}
       textColor={"white"}
       overflowY={"scroll"}
@@ -49,7 +50,7 @@ const Wallet = () => {
             <TonConnectButton />
         </Flex>
 
-        <Text fontSize={'40px'} fontWeight={800}>K0</Text>
+        <Text fontSize={'40px'} fontWeight={400} fontFamily='StretchPro'>K0</Text>
 
         <Flex alignItems={'center'} justifyContent={'space-evenly'} w={'100%'}>
             <Box display={'grid'} alignItems={'center'}
@@ -89,7 +90,7 @@ const Wallet = () => {
             <Flex alignItems={'center'} gap={2}>
                 <Image src="../Icons/ton.png" w={'35px'} borderRadius={'10px'}/>
                 <Box display={'grid'}>
-                <Text fontSize={'12px'} fontWeight={500}>
+                <Text fontSize={'15px'} fontWeight={500}>
                     Ton Coin
                 </Text>
                 <Text fontSize={'10px'}>
@@ -97,7 +98,8 @@ const Wallet = () => {
                 </Text>
                 </Box>
             </Flex>
-            <Button w={'70px'} h={'38px'} fontSize={'15px'} borderRadius={'100px'} bg={'#FFFFFF33'} justifyContent={'center'} alignItems={'center'} color={'#eaeaea'}>
+            <Button w={'70px'} h={'38px'} fontSize={'15px'} borderRadius={'100px'} bg={'#FFFFFF33'}
+            fontWeight={600} justifyContent={'center'} alignItems={'center'} color={'#eaeaea'}>
                 $0
             </Button>
         </Flex>

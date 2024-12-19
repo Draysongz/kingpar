@@ -47,8 +47,8 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
 
   // Determine the button label
   const getButtonLabel = (claimed: boolean) => {
-    if (claimed) return <FaRegCheckCircle />;
-    return connected ? "Claim".toUpperCase() : "Start".toUpperCase();
+    if (claimed) return <FaRegCheckCircle size={'15px'}/>;
+    return connected ? "Claim" : "Start";
   };
 
   // Button click handler
@@ -65,14 +65,14 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
   };
 
   return (
-    <Box display={"grid"} w={"100%"} gap={4}>
+    <Box display={"grid"} w={"100%"} gap={4} fontFamily={'body'}>
       {tasks &&
         tasks.map((box) => (
           <Box
             display={"flex"}
             key={box.id}
             borderRadius="md"
-            p={4}
+            p={2}
             boxShadow="sm"
             width="100%"
             h={"60px"}
@@ -86,15 +86,18 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
                 w={"30px"}
               />
               <Box>
-                <Text fontSize={"15px"}>{box.title}</Text>
-                <Text fontSize={"10px"}>+{box.rewards} KP</Text>
+                <Text fontSize={"15px"} fontWeight={600}>{box.title}</Text>
+                <Text fontSize={"10px"} fontWeight={500}>+{box.rewards} KP</Text>
               </Box>
             </Flex>
             <Button
-              width="57px"
+              width="67px"
+              p={'10px'}
               height={"30px"}
               borderRadius={"100px"}
               fontSize={"10px"}
+              fontFamily='StretchPro'
+              fontWeight={400}
               bg={
                 box.claimed ? "#EAEAEA33" : connected ? "#32EAFF" : "#FFFFFF33"
               }

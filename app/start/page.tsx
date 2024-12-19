@@ -7,7 +7,7 @@ const Start = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -39,7 +39,7 @@ const Start = () => {
       >
         <Image src="../Icons/logo.png"/>
 
-        <Text fontSize={'40px'} fontWeight={800} position={'absolute'} bottom={16}>KINGPAR</Text>
+        <Text fontSize={'40px'} fontFamily="StretchPro" fontWeight={400} position={'absolute'} bottom={16}>KINGPAR</Text>
       </Flex>
     </Box>
   );

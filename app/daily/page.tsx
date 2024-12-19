@@ -61,11 +61,13 @@ const Daily = () => {
    );
  }
 
+
+
   return (
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -96,11 +98,11 @@ const Daily = () => {
         h={"100%"}
       >
         <Flex direction={"column"} alignItems={"center"}>
-          <Text color={"#32EAFF"} fontSize={"15px"} fontWeight={700}>
+          <Text color={"#32EAFF"} fontSize={"15px"} fontFamily={'body'} fontWeight={700}>
             YOUR DAILY REWARDS
           </Text>
           <Image src="../Icons/bolt.png" w={{ base: "100px", sm: "200px" }} />
-          <Text fontSize={"40px"} fontWeight={800}>
+          <Text fontSize={"40px"} fontFamily="StretchPro" fontWeight={400}>
             Day {streak}
           </Text>
         </Flex>
@@ -118,16 +120,17 @@ const Daily = () => {
             <Text
               fontSize={{ base: "60px", sm: "96px" }}
               color={"#ffffff"}
-              fontWeight={700}
+              fontFamily='StretchPro'
+              fontWeight={400}
               letterSpacing={"2px"}
               mt={-5}
             >
               K
             </Text>
-            <Text fontSize={"32px"} fontWeight={600} mt={-5}>
+            <Text fontSize={"32px"} fontFamily="StretchPro" fontWeight={400} mt={-5}>
               {reward}
             </Text>
-            <Text fontSize={"15px"} fontWeight={700}>
+            <Text fontSize={"15px"} fontWeight={500} color={'#eaeaea'} fontFamily={'body'}>
               Kingpar Points
             </Text>
           </Box>
@@ -136,17 +139,22 @@ const Daily = () => {
             fontSize={"15px"}
             textAlign={"center"}
             w={"81%"}
+            fontFamily={'body'}
             fontWeight={500}
           >
             Come back tomorrow for check-in day {streak ? streak + 1 : 1}
             <br /> Tip: Skipping a day resets your check-in.
           </Text>
           <Button
-            w={"90%"}
+            w={"60%"}
             h={"40px"}
+            fontSize={'10px'}
+            borderRadius={'10px'}
             color={"#001100"}
             bg={"#E1E1E1"}
             _hover={{ bg: "#E1E1E1" }}
+            fontFamily='StretchPro'
+            fontWeight={400}
           >
             <Link href={"/home"}>Continue</Link>
           </Button>

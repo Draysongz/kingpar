@@ -7,7 +7,7 @@ const Loading = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -41,7 +41,7 @@ const Loading = () => {
         <CircularProgress isIndeterminate size={'136px'} trackColor={'#FFFFFF4D'} color="#2C293B" />
         <Flex alignItems={'center'} direction={'column'} gap={0}>
         <Text fontSize={'12px'} mt={3}>LOADING</Text>
-        <Text fontSize={'40px'} fontWeight={800} lineHeight={'40.48px'}>KINGPAR</Text>
+        <Text fontSize={'40px'} fontFamily="StretchPro" fontWeight={400} lineHeight={'40.48px'}>KINGPAR</Text>
         </Flex>
       </Flex>
     </Box>

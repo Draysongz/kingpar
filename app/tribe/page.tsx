@@ -25,8 +25,9 @@ const Tribe = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
+      fontFamily={'body'}
       bgPosition={"center"}
       bgSize={"cover"}
       width={"100vw"}
@@ -70,18 +71,17 @@ const Tribe = () => {
               w={"60%"}
               fontSize={"36px"}
               color={"#EAEAEA"}
-              fontWeight={700}
+              fontWeight={500}
               lineHeight={"42.19px"}
             >
               Start your tribe journey
             </Text>
             <Text
               color={"#eaeaea"}
-              fontSize={"15px"}
+              fontSize={"14px"}
               textAlign={"center"}
               w={"65%"}
               fontWeight={500}
-              letterSpacing={"2px"}
             >
               Farm 10% faster as a new tribe member or owner.
             </Text>
@@ -92,6 +92,8 @@ const Tribe = () => {
               borderRadius={"100px"}
               p={"10px"}
               bg={"#ffffff"}
+              fontFamily='StretchPro'
+              fontWeight={400}
               _hover={{ bg: "#ffffff" }}
               color={"#000000"}
               fontSize={"10px"}
@@ -146,6 +148,7 @@ const Tribe = () => {
                     _hover={{ bg: "#32eaff" }}
                     w={"60px"}
                     h={"30px"}
+                    fontFamily='StretchPro'
                     borderRadius={"100px"}
                     p={"10px"}
                   >

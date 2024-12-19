@@ -9,12 +9,16 @@ const WeeklyCarousel = () => {
       title: "Proof of Activity",
       prize: "1000",
       taskDone: "",
+      btnTxt: "Start",
+      border: "",
     },
     {
       id: 2,
       title: "Earn for checking socials",
       prize: "0/450",
       taskDone: "0 / 4",
+      btnTxt: "Open",
+      border: "5px solid #121212",
     },
     {
       id: 3,
@@ -22,6 +26,8 @@ const WeeklyCarousel = () => {
       prize: "0/300",
       imagePath: "../Icons/telegram.png",
       taskDone: "0 / 3",
+      btnTxt: "Open",
+      border: "5px solid #121212",
     },
   ];
 
@@ -32,6 +38,7 @@ const WeeklyCarousel = () => {
     mx="auto"
     borderRadius="md"
     boxShadow="lg"
+    fontFamily={'body'}
     css={{
       "&::-webkit-scrollbar": {
         display: "none", // Hides the scrollbar for a cleaner look
@@ -61,23 +68,24 @@ const WeeklyCarousel = () => {
             bg={"#121212"}
             w={"60px"}
             h={"30px"}
+            fontFamily='StretchPro'
             borderRadius={"100px"}
             p={"10px"}
             color={"#EAEAEA"}
             fontSize={"10px"}
             _hover={{ bg: "#121212" }}
           >
-            Open
+            {slide.btnTxt}
           </Button>
           <Flex
             w={"66px"}
             h={"34px"}
             borderRadius={"100px"}
-            border={"5px solid #121212"}
+            border={slide.border}
             justifyContent={"center"}
             alignItems={"center"}
           >
-            <Text fontSize={"10px"} fontWeight={400} color={"#EAEAEA"}>
+            <Text fontSize={"10px"} fontWeight={400} color={"#EAEAEA"} fontFamily='StretchPro'>
               {" "}
               {slide.taskDone}
             </Text>

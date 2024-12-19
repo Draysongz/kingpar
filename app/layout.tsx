@@ -13,10 +13,10 @@ const breakpoints = {
 };
 
 const theme = extendTheme({
-  fonts: {
-    body: "InterVariable, sans-serif",
-    heading: "InterVariable, sans-serif",
-  },
+  // fonts: {
+  //   body: "InterVariable, sans-serif",
+  //   heading: "InterVariable, sans-serif",
+  // },
   breakpoints,
 });
 import dynamic from "next/dynamic";

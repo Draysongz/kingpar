@@ -82,13 +82,14 @@ const Earn = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
       width={"100vw"}
       height={"100vh"}
       alignItems={"center"}
+      fontFamily={'body'}
       textColor={"white"}
       overflowY={"scroll"}
       _before={{
@@ -133,6 +134,7 @@ const Earn = () => {
           >
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
@@ -140,6 +142,7 @@ const Earn = () => {
             </Tab>
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
@@ -147,6 +150,7 @@ const Earn = () => {
             </Tab>
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
@@ -154,6 +158,7 @@ const Earn = () => {
             </Tab>
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
@@ -161,6 +166,7 @@ const Earn = () => {
             </Tab>
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
@@ -168,6 +174,7 @@ const Earn = () => {
             </Tab>
             <Tab
               fontSize={"17px"}
+              fontWeight={500}
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >

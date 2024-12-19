@@ -9,7 +9,8 @@ const History = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
+      fontFamily={'body'}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}

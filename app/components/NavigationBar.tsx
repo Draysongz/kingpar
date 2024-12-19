@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Box, createIcon, Flex, Icon, Text } from "@chakra-ui/react";
@@ -86,7 +85,12 @@ interface NavItemProps {
   activePaths?: string[];
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, label, to, activePaths = [], }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  icon,
+  label,
+  to,
+  activePaths = [],
+}) => {
   const pathname = usePathname();
   const isActive = [to, ...activePaths].includes(pathname);
 
@@ -98,7 +102,9 @@ const NavItem: React.FC<NavItemProps> = ({ icon, label, to, activePaths = [], })
     >
       <Link href={to}>
         {icon}
-        <Text className="mt-1 text-xs">{label}</Text>
+        <Text fontFamily="StretchPro" fontWeight={400} fontSize={'10px'} mt={1}>
+          {label}
+        </Text>
       </Link>
     </Box>
   );
@@ -119,11 +125,23 @@ const NavigationBar: React.FC = () => {
       right={0}
       p={"10px"}
       zIndex={80}
+      // fontFamily= "StretchPro"
+      // fontWeight={400}
     >
       <NavItem icon={<HomeIcon />} label="HOME" to="/home" />
       <NavItem icon={<EarnIcon />} label="EARN" to="/earn" />
-      <NavItem icon={<FrensIcon />} label="FRENS" to="/friends" activePaths={["/tribe", "/tribelist"]} />
-      <NavItem icon={<WalletIcon />} label="WALLET" to="/wallet" activePaths={["/history", "/points"]} />
+      <NavItem
+        icon={<FrensIcon />}
+        label="FRENS"
+        to="/friends"
+        activePaths={["/tribe", "/tribelist"]}
+      />
+      <NavItem
+        icon={<WalletIcon />}
+        label="WALLET"
+        to="/wallet"
+        activePaths={["/history", "/points"]}
+      />
     </Box>
   );
 };

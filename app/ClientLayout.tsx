@@ -7,6 +7,9 @@ import "./globals.css";
 import { UserProvider } from "@/context/context";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css'; 
 
 const breakpoints = {
   sm: "390px", // Custom Small size (e.g., 480px)
@@ -15,14 +18,6 @@ const breakpoints = {
   xl: "1280px", // Custom Extra Large size (e.g., 1280px)
   "2xl": "1536px", // Custom Double Extra Large (e.g., 1536px)
 };
-
-const theme = extendTheme({
-  fonts: {
-    body: "InterVariable, sans-serif",
-    heading: "InterVariable, sans-serif",
-  },
-  breakpoints,
-});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +28,23 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+// const stretchPro = localFont({
+//   src: "./fonts/stretch-pro.regular.otf",
+//   variable: "--font-stretch-pro",
+//   weight: "400 700", // Adjust weight range as necessary
+// });
+
+
+const theme = extendTheme({
+  fonts: {
+    body: "Roboto, sans-serif",
+    heading: "Roboto, sans-serif",
+    mono: "GeistMono, monospace",
+    // stretch: "StretchPro, sans-serif",
+
+  },
+  breakpoints,
 });
 
 // export const metadata: Metadata = {
@@ -78,7 +90,7 @@ export default function ClientLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable}  antialiased`}
       >
         <UserProvider>
           <ChakraProvider theme={theme}>{children}</ChakraProvider>

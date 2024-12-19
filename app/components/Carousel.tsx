@@ -73,6 +73,7 @@ const Carousel = () => {
       overflowX="scroll"
       width="90%"
       mx="auto"
+      fontFamily={'body'}
       borderRadius="md"
       boxShadow="lg"
       css={{
@@ -106,7 +107,8 @@ const Carousel = () => {
               w={"60px"}
               h={"30px"}
               borderRadius={"100px"}
-              p={"10px"}
+              p={"5px"}
+              fontFamily='StretchPro'
               color={"#EAEAEA"}
               fontSize={"10px"}
               onClick={slide.id === 1 ? onOpen : undefined}
@@ -119,12 +121,14 @@ const Carousel = () => {
               h={"34px"}
               borderRadius={"100px"}
               border={"5px solid #121212"}
+              fontFamily="StretchPro"
               justifyContent={"center"}
+              p={'5px'}
               alignItems={"center"}
             >
               <Text fontSize={"10px"} fontWeight={400} color={"#EAEAEA"}>
                 {" "}
-                {slide.taskDone} / 4
+                {slide.taskDone}/4
               </Text>
             </Flex>
           </Flex>
@@ -133,12 +137,12 @@ const Carousel = () => {
       {/*  */}
 
       <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay backdropFilter="blur(10px)" />
+        <DrawerOverlay backdropFilter="blur(10px)" bg="transparent" />
         <DrawerContent bg={"#000000"} alignItems={"center"} borderTopRadius={'30px'} py={'20px'}>
           <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"}>
-            MemeFi Quest Round 2 - 0 / 4
+            MemeFi Quest Round 2 - 0/4
           </DrawerHeader>
-          <DrawerBody display={"flex"} flexDirection={"column"} gap={2}>
+          <DrawerBody display={"flex"} flexDirection={"column"} gap={2} fontFamily={'body'}>
             <Image src="../Background/memefiBanner.png" />
             <Text
               fontSize={"13px"}
@@ -162,10 +166,11 @@ const Carousel = () => {
                 >
                   <Flex alignItems={"center"} gap={3}>
                     <Image src={box.imagePath} w={"35px"} />
-                    <Text color={"#eaeaea"}>{box.title}</Text>
+                    <Text fontSize={'15px'} fontWeight={600} color={"#eaeaea"}>{box.title}</Text>
                   </Flex>
                   <Button
                     bg={"#ffffff"}
+                    fontFamily='StretchPro'
                     borderRadius={'100px'}
                     w={"57px"}
                     h={"30px"}
@@ -180,8 +185,9 @@ const Carousel = () => {
             </Flex>
             <Button
               isDisabled
-              w={"100%"}
-              h={"50px"}
+              w={"60%"}
+              mx={'auto'}
+              h={"42px"}
               borderRadius={"10px"}
               p={"15px 10px"}
               bg={"#297977"}
@@ -192,10 +198,10 @@ const Carousel = () => {
               gap={2}
               _hover={{bg: "#297977"}}
             >
-              <Text fontSize={"20px"} fontWeight={800}>
+              <Text fontFamily='StretchPro' fontSize={"10px"} fontWeight={400}>
                 Claim
               </Text>
-              <Text fontSize={"10px"} fontWeight={500}>
+              <Text fontSize={"10px"} fontWeight={500} lineHeight={'11.72px'}>
                 {claimPoints}KP
               </Text>
             </Button>

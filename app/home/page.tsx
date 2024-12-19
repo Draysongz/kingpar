@@ -118,7 +118,7 @@ const Home = () => {
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%)"}
+      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -158,14 +158,14 @@ const Home = () => {
             borderRadius={"55%"}
             src={user ? user.photoUrl : "../Icons/profile.png"}
           />
-          <Text color={"#ffffff"} fontSize={"24px"} fontWeight={700}>
+          <Text color={"#ffffff"} fontSize={"24px"} fontFamily={'StretchPro'} fontWeight={400}>
             {user && user.username}
           </Text>
           <Text
             fontSize={"40px"}
             color={"#ffffff"}
-            fontWeight={700}
-            letterSpacing={"5px"}
+            fontFamily={'StretchPro'}
+            fontWeight={400}
           >
             K {user && user.points}
           </Text>
@@ -177,11 +177,12 @@ const Home = () => {
           alignItems={"center"}
           justifyContent={"center"}
           w={"100%"}
+          fontFamily={'body'}
         >
           {buttonState === "claim" && (
             <Button
-              w={"90%"}
-              h={"70px"}
+              w={"60%"}
+              h={"60px"}
               borderRadius={"10px"}
               p={"15px 10px"}
               bg={"#297977"}
@@ -202,8 +203,8 @@ const Home = () => {
           )}
           {buttonState === "start" && (
             <Button
-              w={"90%"}
-              h={"70px"}
+              w={"60%"}
+              h={"60px"}
               borderRadius={"10px"}
               p={"15px 10px"}
               bg={"#E1E1E1"}
@@ -224,10 +225,10 @@ const Home = () => {
             <Button
               display={"flex"}
               isDisabled
-              w={"90%"}
-              h={"70px"}
+              w={"60%"}
+              h={"60px"}
               borderRadius={"10px"}
-              p={"15px 10px"}
+              p={"15px 15px"}
               bg={"#E1E1E133"}
               color={"#EAEAEA"}
               alignItems={"center"}
@@ -236,7 +237,7 @@ const Home = () => {
             >
               <Flex
                 alignItems={"center"}
-                justifyContent={"center"}
+                justifyContent={""}
                 flex={1}
                 gap={2}
               >
@@ -244,7 +245,7 @@ const Home = () => {
                 <Text fontSize={"20px"} fontWeight={800} mt={-1}>
                   Farming
                 </Text>
-                <Text textAlign={"center"}>{pointsEarned.toFixed(3)}</Text>
+                {/* <Text textAlign={"center"}>{pointsEarned.toFixed(3)}</Text> */}
               </Flex>
 
               <Text fontSize={"10px"} textAlign={"left"}>
