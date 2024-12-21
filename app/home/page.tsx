@@ -169,22 +169,28 @@ const Home = () => {
             {user && user.username}
           </Text>
           <Flex
-            fontSize={{base: "30px", sm: '35px'}}
+            fontSize={{ base: "30px", sm: "35px" }}
             color={"#ffffff"}
             fontFamily={"StretchPro"}
             fontWeight={400}
             display={"flex"}
+            justifyContent={"center"}
             alignItems={"center"}
             textAlign={"center"}
             // bg={'red'}
+            gap={2}
           >
-            <Image src="./Icons/logo.png" 
-            w={"60px"} 
-            // bg={'#000000'} 
-            // borderRadius={'100%'} 
-            // border={'5px solid #866A99'}
-            />
-            <Text mt={-2} ml={0}>{user && user.points}</Text>
+            <Box
+              borderRadius={"100%"}
+              border={"1px solid #866A99"}
+              bg={"#2c262f"}
+            >
+              <Image src="./Icons/logo.png" w={"40px"} />
+            </Box>
+
+            <Text mt={-2} ml={0}>
+              {user && new Intl.NumberFormat().format(user.points)}
+            </Text>
           </Flex>
         </Box>
         <Box
@@ -241,19 +247,25 @@ const Home = () => {
           {buttonState === "farming" && (
             <Button
               display={"flex"}
-              isDisabled
+              // isDisabled
               w={"60%"}
               h={"60px"}
               borderRadius={"10px"}
               p={"15px 15px"}
-              bg={"#E1E1E1"}
-              color={"#121212"}
+              color={"#fffff"}
+              bg={"#E1E1E133"}
               alignItems={"center"}
               justifyContent={"space-between"}
               textAlign={"center"}
             >
-              <Flex alignItems={"center"} justifyContent={""} flex={1} gap={2}>
-                <Image src="../Icons/thunder.png" w={"16px"} />
+              <Flex
+                alignItems={"center"}
+                justifyContent={""}
+                flex={1}
+                gap={2}
+                // bg={"#E1E1E1"}
+              >
+                <Image src="../Icons/bolt.png" w={"16px"} />
                 <Text fontSize={"20px"} fontWeight={800} mt={-1}>
                   Farming
                 </Text>
