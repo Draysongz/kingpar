@@ -215,6 +215,9 @@ const Home = () => {
               textAlign={"center"}
               gap={2}
               onClick={handleClaim}
+              _hover={{
+                bg: "#297977",
+              }}
             >
               <Text fontSize={"20px"} fontWeight={800}>
                 Claim
@@ -237,6 +240,9 @@ const Home = () => {
               textAlign={"center"}
               gap={2}
               onClick={handleStartFarming}
+              _hover={{
+                bg: "#ffffff",
+              }}
             >
               <Image src="../Icons/thunder.png" />
               <Text fontSize={"20px"} fontWeight={800}>
@@ -257,6 +263,9 @@ const Home = () => {
               alignItems={"center"}
               justifyContent={"space-between"}
               textAlign={"center"}
+              _hover={{
+                bg: "#E1E1E133",
+              }}
             >
               <Flex
                 alignItems={"center"}
