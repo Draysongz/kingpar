@@ -159,12 +159,19 @@ async function getTelegramProfilePhoto(userId: number): Promise<string | null> {
     if (fileData.ok) {
       const filePath = fileData.result.file_path;
       const photoUrl = `https://api.telegram.org/file/bot${telegramToken}/${filePath}`;
-      const updatedPhoto =  await prisma.user.update({
+      const existingUser = await prisma.user.findUnique({
         where: { telegramId: userId.toString() },
-        data: {
-          photoUrl,
-        },
       });
+
+      if (existingUser) {
+        // Update photoUrl for existing users
+        await prisma.user.update({
+          where: { telegramId: userId.toString() },
+          data: { photoUrl },
+        });
+      }else{
+        return photoUrl
+      } 
       return photoUrl
 
      
