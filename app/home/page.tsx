@@ -4,121 +4,123 @@ import { Box, Flex, Image, Text, Button } from "@chakra-ui/react";
 import NavigationBar from "../components/NavigationBar";
 import { useUser } from "@/context/context";
 const Home = () => {
- const [timer, setTimer] = useState(0); // Remaining time in seconds
- const [pointsEarned, setPointsEarned] = useState(0);
- const [buttonState, setButtonState] = useState("");
- const { user, setUser } = useUser();
+  const [timer, setTimer] = useState(0); // Remaining time in seconds
+  const [pointsEarned, setPointsEarned] = useState(0);
+  const [buttonState, setButtonState] = useState("");
+  const { user, setUser } = useUser();
 
- useEffect(() => {
-   // Fetch farming state on load
-   const fetchFarmingState = async () => {
-     if (!user) return;
+  useEffect(() => {
+    // Fetch farming state on load
+    const fetchFarmingState = async () => {
+      if (!user) return;
 
-     try {
-       const res = await fetch("/api/getFarmDeets", {
-         method: "GET",
-         headers: { userId: user.telegramId },
-       });
+      try {
+        const res = await fetch("/api/getFarmDeets", {
+          method: "GET",
+          headers: { userId: user.telegramId },
+        });
 
-       const data = await res.json();
-       if (!res.ok) {
-         throw new Error(data.message || "Failed to fetch farming state");
-       }
-
-       if (data.isFarming) {
-         setTimer(data.remainingTime);
-         setPointsEarned(data.pointsEarned);
-         setButtonState("farming");
-       } else {
-        // Check if the user has farmed for the 7 hours
-        if (data.pointsEarned > 0) {
-          // User has points, so set button to "claim"
-          setPointsEarned(data.pointsEarned)
-          setButtonState("claim");
-        } else {
-          // User has not farmed in a while, reset farming state
-          setTimer(0);
-          setPointsEarned(0);
-          setButtonState("start");
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to fetch farming state");
         }
+
+        if (data.isFarming) {
+          setTimer(data.remainingTime);
+          setPointsEarned(data.pointsEarned);
+          setButtonState("farming");
+        } else {
+          // Check if the user has farmed for the 7 hours
+          if (data.pointsEarned > 0) {
+            // User has points, so set button to "claim"
+            setPointsEarned(data.pointsEarned);
+            setButtonState("claim");
+          } else {
+            // User has not farmed in a while, reset farming state
+            setTimer(0);
+            setPointsEarned(0);
+            setButtonState("start");
+          }
+        }
+      } catch (error) {
+        console.error(error);
       }
-     } catch (error) {
-       console.error(error);
-     }
-   };
+    };
 
-   fetchFarmingState();
- }, [user]);
+    fetchFarmingState();
+  }, [user]);
 
- useEffect(() => {
-   if (buttonState === "farming" && timer > 0) {
-     const interval = setInterval(() => {
-       setTimer((prev) => Math.max(prev - 1, 0));
-       setPointsEarned((prev) => prev + 0.001);
-     }, 1000);
+  useEffect(() => {
+    if (buttonState === "farming" && timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prev) => Math.max(prev - 1, 0));
+        setPointsEarned((prev) => prev + 0.001);
+      }, 1000);
 
-     return () => clearInterval(interval); // Cleanup
-   }
- }, [buttonState, timer]);
+      return () => clearInterval(interval); // Cleanup
+    }
+  }, [buttonState, timer]);
 
- const handleStartFarming = async () => {
-   try {
-     const res = await fetch("/api/farming", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({ userId: user?.telegramId, isClaiming: false }),
-     });
+  const handleStartFarming = async () => {
+    try {
+      const res = await fetch("/api/farming", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user?.telegramId, isClaiming: false }),
+      });
 
-     const data = await res.json();
-     if (!res.ok) {
-       throw new Error(data.message || "Failed to start farming");
-     }
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to start farming");
+      }
 
-     setTimer(7 * 60 * 60); // 7 hours in seconds
-     setPointsEarned(0);
-     setButtonState("farming");
-   } catch (error) {
-     console.error(error);
-   }
- };
+      setTimer(7 * 60 * 60); // 7 hours in seconds
+      setPointsEarned(0);
+      setButtonState("farming");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
- const handleClaim = async () => {
-   try {
-     const res = await fetch("/api/farming", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify({ userId: user?.telegramId, isClaiming: true }),
-     });
+  const handleClaim = async () => {
+    try {
+      const res = await fetch("/api/farming", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user?.telegramId, isClaiming: true }),
+      });
 
-     const data = await res.json();
-     if (!res.ok) {
-       throw new Error(data.message || "Failed to claim points");
-     }
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to claim points");
+      }
 
-     setUser(data.user); // Update user in context
-     setTimer(0);
-     setPointsEarned(0);
-     setButtonState("start");
-   } catch (error) {
-     console.error(error);
-   }
- };
+      setUser(data.user); // Update user in context
+      setTimer(0);
+      setPointsEarned(0);
+      setButtonState("start");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
- const formatTime = (seconds: number) => {
-   const hrs = Math.round(Math.floor(seconds / 3600));
-   const mins = Math.round(Math.floor((seconds % 3600) / 60));
-   const secs = Math.round(seconds % 60);
-   return `${hrs}h ${mins}m ${secs}s`;
- };
+  const formatTime = (seconds: number) => {
+    const hrs = Math.round(Math.floor(seconds / 3600));
+    const mins = Math.round(Math.floor((seconds % 3600) / 60));
+    const secs = Math.round(seconds % 60);
+    return `${hrs}h ${mins}m ${secs}s`;
+  };
   return (
     <Box
       display={"flex"}
       flexDirection={"column"}
-      bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
+      bgImage={
+        "linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"
+      }
       bgRepeat={"no-repeat"}
       bgPosition={"center"}
       bgSize={"cover"}
@@ -158,17 +160,32 @@ const Home = () => {
             borderRadius={"55%"}
             src={user ? user.photoUrl : "../Icons/profile.png"}
           />
-          <Text color={"#ffffff"} fontSize={"24px"} fontFamily={'StretchPro'} fontWeight={400}>
-            {user && user.username}
-          </Text>
           <Text
-            fontSize={"40px"}
             color={"#ffffff"}
-            fontFamily={'StretchPro'}
+            fontSize={"24px"}
+            fontFamily={"StretchPro"}
             fontWeight={400}
           >
-            K {user && user.points}
+            {user && user.username}
           </Text>
+          <Flex
+            fontSize={{base: "30px", sm: '35px'}}
+            color={"#ffffff"}
+            fontFamily={"StretchPro"}
+            fontWeight={400}
+            display={"flex"}
+            alignItems={"center"}
+            textAlign={"center"}
+            // bg={'red'}
+          >
+            <Image src="./Icons/logo.png" 
+            w={"60px"} 
+            // bg={'#000000'} 
+            // borderRadius={'100%'} 
+            // border={'5px solid #866A99'}
+            />
+            <Text mt={-2} ml={0}>{user && user.points}</Text>
+          </Flex>
         </Box>
         <Box
           display={"flex"}
@@ -177,7 +194,7 @@ const Home = () => {
           alignItems={"center"}
           justifyContent={"center"}
           w={"100%"}
-          fontFamily={'body'}
+          fontFamily={"body"}
         >
           {buttonState === "claim" && (
             <Button
@@ -207,7 +224,7 @@ const Home = () => {
               h={"60px"}
               borderRadius={"10px"}
               p={"15px 10px"}
-              bg={"#E1E1E1"}
+              bg={"#ffffff"}
               color={"#001100"}
               alignItems={"center"}
               justifyContent={"center"}
@@ -229,18 +246,13 @@ const Home = () => {
               h={"60px"}
               borderRadius={"10px"}
               p={"15px 15px"}
-              bg={"#E1E1E133"}
-              color={"#EAEAEA"}
+              bg={"#E1E1E1"}
+              color={"#121212"}
               alignItems={"center"}
               justifyContent={"space-between"}
               textAlign={"center"}
             >
-              <Flex
-                alignItems={"center"}
-                justifyContent={""}
-                flex={1}
-                gap={2}
-              >
+              <Flex alignItems={"center"} justifyContent={""} flex={1} gap={2}>
                 <Image src="../Icons/thunder.png" w={"16px"} />
                 <Text fontSize={"20px"} fontWeight={800} mt={-1}>
                   Farming
