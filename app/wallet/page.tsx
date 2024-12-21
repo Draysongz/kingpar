@@ -50,7 +50,24 @@ const Wallet = () => {
             <TonConnectButton />
         </Flex>
 
-        <Text fontSize={'40px'} fontWeight={400} fontFamily='StretchPro'>K0</Text>
+        <Flex
+            fontSize={{base: "30px", sm: '35px'}}
+            color={"#ffffff"}
+            fontFamily={"StretchPro"}
+            fontWeight={400}
+            display={"flex"}
+            alignItems={"center"}
+            textAlign={"center"}
+            // bg={'red'}
+          >
+            <Image src="./Icons/logo.png" 
+            w={"60px"} 
+            // bg={'#000000'} 
+            // borderRadius={'100%'} 
+            // border={'5px solid #866A99'}
+            />  
+          <Text mt={-2} ml={0}>0</Text>
+          </Flex>
 
         <Flex alignItems={'center'} justifyContent={'space-evenly'} w={'100%'}>
             <Box display={'grid'} alignItems={'center'}
