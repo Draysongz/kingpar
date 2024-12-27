@@ -113,20 +113,20 @@ const Daily = () => {
             flexDirection={"column"}
             alignItems={"center"}
             p={5}
-            gap={2}
+            gap={5}
             w={"90%"}
             border={"4px solid #EAEAEA33"}
           >
-            <Text
-              fontSize={{ base: "60px", sm: "96px" }}
-              color={"#ffffff"}
-              fontFamily='StretchPro'
-              fontWeight={400}
-              letterSpacing={"2px"}
-              mt={-5}
+ <Flex
+              borderRadius={"full"}
+              border={"1px solid #866A99"}
+              bg={"#2c262f"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              
             >
-              K
-            </Text>
+              <Image src="./Icons/logo.png" w={"150px"} />
+            </Flex>
             <Text fontSize={"32px"} fontFamily="StretchPro" fontWeight={400} mt={-5}>
               {reward}
             </Text>

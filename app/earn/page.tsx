@@ -132,14 +132,7 @@ const Earn = () => {
               },
             }}
           >
-            <Tab
-              fontSize={"17px"}
-              fontWeight={500}
-              color={"#EAEAEA33"}
-              _selected={{ color: "#EAEAEA" }}
-            >
-              New
-            </Tab>
+           
             <Tab
               fontSize={"17px"}
               fontWeight={500}
@@ -182,9 +175,7 @@ const Earn = () => {
             </Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>
-              <NewTab />
-            </TabPanel>
+           
             <TabPanel>
               <OnChain task={onChainTasks} />
             </TabPanel>

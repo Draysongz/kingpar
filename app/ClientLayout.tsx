@@ -7,9 +7,7 @@ import "./globals.css";
 import { UserProvider } from "@/context/context";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css'; 
+import "@fontsource-variable/nunito";
 
 const breakpoints = {
   sm: "390px", // Custom Small size (e.g., 480px)
@@ -38,11 +36,10 @@ const geistMono = localFont({
 
 const theme = extendTheme({
   fonts: {
-    body: "Roboto, sans-serif",
-    heading: "Roboto, sans-serif",
+    body: "Nunito Variable, sans-serif",
+    heading: "Nunito Variable, sans-serif",
     mono: "GeistMono, monospace",
     // stretch: "StretchPro, sans-serif",
-
   },
   breakpoints,
 });

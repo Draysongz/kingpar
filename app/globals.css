@@ -3,11 +3,7 @@
 @tailwind utilities;
 
 
-@font-face {
-  font-family: "StretchPro";
-  src: url("./fonts/stretch-pro-regular.otf") format("opentype");
-  font-style: normal;
-}
+
 
 
 :root {

@@ -9,20 +9,15 @@ const Socials = () => {
 
   // Array containing content for boxes
   const boxes = [
-    { id: 1,  title: "Memepad on Telegram" },
-    { id: 2,  title: "Boost Kingpar" },
-    { id: 3,  title: "Follow Kingpar on Tiktok" },
-    { id: 4,  title: "Backing from Binance Labs" },
-    { id: 5,  title: "Follow Kingpar on Coinmarketcap" },
-    { id: 6,  title: "Follow Kingpar CEO on IG" },
-    { id: 7,  title: "Follow VP of Design on IG" },
-    { id: 8,  title: "Join Kingpar Facebook" },
-    { id: 9,  title: "Follow Kingpar on X" },
-    { id: 10,  title: "Join Kingpar Discord" },
-    { id: 11,  title: "Follow Kingpar on Youtube" },
-    { id: 12,  title: "Follow Kingpar’s CEO on X" },
-    { id: 13,  title: "Follow Kingpar’s CMO on X" },
-    { id: 14,  title: "Follow Kingpar’s VP of Design on X" },
+    { id: 1,  title: "Boost Kingpar" },
+    { id: 2,  title: "Follow Kingpar on Tiktok" },
+    { id: 3,  title: "Follow Kingpar on Coinmarketcap" },
+    { id: 4,  title: "Follow Kingpar CEO on IG" },
+    { id: 5,  title: "Join Kingpar Facebook" },
+    { id: 6,  title: "Follow Kingpar on X" },
+    { id: 7,  title: "Join Kingpar Discord" },
+    { id: 8,  title: "Follow Kingpar on Youtube" },
+    { id: 9,  title: "Follow Kingpar’s CEO on X" },
   ];
 
   // State for buttons

@@ -148,9 +148,10 @@ const Frens = () => {
                     >
                       <Flex gap={3} alignItems={"center"}>
                         <Image
-                          src="../Icons/earnIcon.png"
-                          alt={`Box ${user.id}`}
+                          src={user && user.photoUrl ? user.photoUrl : "/Icons/profile.png"}
+                          alt={`user`}
                           w={"30px"}
+                          borderRadius={"full"}
                         />
                         <Box>
                           <Text fontSize={"15px"}>{user.username}</Text>
@@ -161,7 +162,7 @@ const Frens = () => {
                         height={"40px"}
                         borderRadius={"100px"}
                         fontSize={"10px"}
-                        fontFamily='StretchPro'
+                        fontFamily="StretchPro"
                         fontWeight={400}
                         bg={"#FFFFFF33"}
                         color={"#EAEAEA"}
