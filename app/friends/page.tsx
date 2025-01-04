@@ -69,7 +69,9 @@ const Frens = () => {
       <Box
         display={"flex"}
         flexDirection={"column"}
-        bgImage={"linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"}
+        bgImage={
+          "linear-gradient(rgb(44, 41, 59), rgb(4, 4, 4) 60%, rgb(44, 41, 59) 85%)"
+        }
         bgRepeat={"no-repeat"}
         bgPosition={"center"}
         bgSize={"cover"}
@@ -78,7 +80,7 @@ const Frens = () => {
         alignItems={"center"}
         textColor={"white"}
         overflowY={"scroll"}
-        fontFamily={'body'}
+        fontFamily={"body"}
         _before={{
           content: '""',
           position: "absolute",
@@ -107,14 +109,10 @@ const Frens = () => {
               gap={2}
               alignItems={"center"}
               justifyContent={"center"}
-              mt={10}
+              mt={5}
             >
-              <Image src="../Icons/frens.png" w={"100px"} />
-              <Text
-                fontSize={"27px"}
-                color={"#ffffff"}
-                fontWeight={700}
-              >
+              <Image src="../Icons/logo.png" w={"150px"} />
+              <Text fontSize={"27px"} color={"#ffffff"} fontWeight={700}>
                 Invite Frens
               </Text>
             </Box>
@@ -130,7 +128,7 @@ const Frens = () => {
               play pass for each fren.
             </Text>
 
-            <Box width={"90%"} display={"grid"} gap={5}>
+            <Box width={"90%"} display={"grid"} gap={5} fontWeight={500}>
               {referredUsers &&
                 referredUsers.length > 0 &&
                 referredUsers.map((user, index) => {
@@ -148,7 +146,11 @@ const Frens = () => {
                     >
                       <Flex gap={3} alignItems={"center"}>
                         <Image
-                          src={user && user.photoUrl ? user.photoUrl : "/Icons/profile.png"}
+                          src={
+                            user && user.photoUrl
+                              ? user.photoUrl
+                              : "/Icons/profile.png"
+                          }
                           alt={`user`}
                           w={"30px"}
                           borderRadius={"full"}
@@ -162,11 +164,11 @@ const Frens = () => {
                         height={"40px"}
                         borderRadius={"100px"}
                         fontSize={"10px"}
-                        fontFamily="StretchPro"
-                        fontWeight={400}
+                        fontWeight={500}
                         bg={"#FFFFFF33"}
                         color={"#EAEAEA"}
                         p={"10px"}
+                        
                       >
                         {user.points} KP
                       </Button>
@@ -198,8 +200,7 @@ const Frens = () => {
           <Button
             bg={"#E1E1E1"}
             w={"60%"}
-            fontFamily="StretchPro"
-            fontWeight={400}
+            fontWeight={500}
             borderRadius={"10px"}
             h={"50px"}
             display={"flex"}
@@ -216,18 +217,27 @@ const Frens = () => {
 
         {/*  */}
         <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
-          <DrawerOverlay backdropFilter="blur(10px)" 
-          bg={'transparent'}/>
+          <DrawerOverlay backdropFilter="blur(10px)" bg={"transparent"} />
           <DrawerContent
             bg={"#000000"}
             alignItems={"center"}
             borderTopRadius={"30px"}
             py={"20px"}
           >
-            <DrawerHeader fontSize={"20px"} fontWeight={800} color={"#eaeaea"} fontFamily={'body'}>
+            <DrawerHeader
+              fontSize={"20px"}
+              fontWeight={800}
+              color={"#eaeaea"}
+              fontFamily={"body"}
+            >
               Invite a fren
             </DrawerHeader>
-            <DrawerBody display={"flex"} flexDirection={"column"} gap={3} alignItems={'center'}>
+            <DrawerBody
+              display={"flex"}
+              flexDirection={"column"}
+              gap={3}
+              alignItems={"center"}
+            >
               <Flex
                 w={"90vw"}
                 h={"50vh"}
@@ -250,7 +260,7 @@ const Frens = () => {
                 textAlign={"center"}
                 gap={2}
                 _hover={{ bg: "#ffffff" }}
-                fontFamily='StretchPro'
+                fontFamily="StretchPro"
                 onClick={handleInviteFriend}
               >
                 <Text fontSize={"10px"} fontWeight={400}>
@@ -269,7 +279,7 @@ const Frens = () => {
                 justifyContent={"center"}
                 textAlign={"center"}
                 gap={2}
-                fontFamily='StretchPro'
+                fontFamily="StretchPro"
                 _hover={{ bg: "transparent" }}
                 onClick={onCopy}
               >
@@ -288,7 +298,7 @@ const Frens = () => {
                 justifyContent={"center"}
                 textAlign={"center"}
                 gap={2}
-                fontFamily='StretchPro'
+                fontFamily="StretchPro"
                 _hover={{ bg: "#E1E1E11A" }}
                 onClick={onClose}
               >

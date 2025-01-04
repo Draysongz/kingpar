@@ -57,7 +57,6 @@ const Farming = () => {
             
             <Button
               width="67px" height={'30px'} borderRadius={'100px'} fontSize={'10px'}
-              fontFamily='StretchPro'
               fontWeight={400}
               bg={
                 buttonStates[index] === "Start"

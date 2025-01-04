@@ -92,7 +92,6 @@ const Tribe = () => {
               borderRadius={"100px"}
               p={"10px"}
               bg={"#ffffff"}
-              fontFamily='StretchPro'
               fontWeight={400}
               _hover={{ bg: "#ffffff" }}
               color={"#000000"}
@@ -148,7 +147,6 @@ const Tribe = () => {
                     _hover={{ bg: "#32eaff" }}
                     w={"60px"}
                     h={"30px"}
-                    fontFamily='StretchPro'
                     borderRadius={"100px"}
                     p={"10px"}
                   >

@@ -123,7 +123,6 @@ const Ferns = ({ task }: { task: TaskResponse[] }) => {
               height={"30px"}
               borderRadius={"100px"}
               fontSize={"10px"}
-              fontFamily='StretchPro'
               fontWeight={400}
               bg={task.claimed ? "#EAEAEA33" : "#32EAFF"}
               color={task.claimed ? "#121212" : "#FFFFFF"}

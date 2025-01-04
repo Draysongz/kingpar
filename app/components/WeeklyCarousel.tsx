@@ -68,7 +68,7 @@ const WeeklyCarousel = () => {
             bg={"#121212"}
             w={"60px"}
             h={"30px"}
-            fontFamily='StretchPro'
+            
             borderRadius={"100px"}
             p={"10px"}
             color={"#EAEAEA"}
@@ -85,7 +85,7 @@ const WeeklyCarousel = () => {
             justifyContent={"center"}
             alignItems={"center"}
           >
-            <Text fontSize={"10px"} fontWeight={400} color={"#EAEAEA"} fontFamily='StretchPro'>
+            <Text fontSize={"10px"} fontWeight={400} color={"#EAEAEA"} >
               {" "}
               {slide.taskDone}
             </Text>

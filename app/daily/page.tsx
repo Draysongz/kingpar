@@ -153,7 +153,7 @@ const Daily = () => {
             color={"#001100"}
             bg={"#E1E1E1"}
             _hover={{ bg: "#E1E1E1" }}
-            fontFamily='StretchPro'
+            
             fontWeight={400}
           >
             <Link href={"/home"}>Continue</Link>

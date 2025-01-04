@@ -39,7 +39,7 @@ const Start = () => {
       >
         <Image src="../Icons/logo.png"/>
 
-        <Text fontSize={'40px'} fontFamily="StretchPro" fontWeight={400} position={'absolute'} bottom={16}>KINGPAR</Text>
+        <Text fontSize={'40px'}  fontWeight={500} position={'absolute'} bottom={16}>KINGPAR</Text>
       </Flex>
     </Box>
   );

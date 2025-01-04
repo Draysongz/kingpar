@@ -57,7 +57,7 @@ const NewTab = () => {
             <Button
               width="67px" height={'30px'} borderRadius={'100px'} fontSize={'10px'} fontWeight={400}
               p={'10px'}
-             fontFamily='StretchPro'
+             
               bg={
                 buttonStates[index] === "Start"
                   ? "#FFFFFF33"

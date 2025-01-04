@@ -96,7 +96,7 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
               height={"30px"}
               borderRadius={"100px"}
               fontSize={"10px"}
-              fontFamily='StretchPro'
+              
               fontWeight={400}
               bg={
                 box.claimed ? "#EAEAEA33" : connected ? "#32EAFF" : "#FFFFFF33"

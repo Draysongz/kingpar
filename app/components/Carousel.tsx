@@ -108,7 +108,7 @@ const Carousel = () => {
               h={"30px"}
               borderRadius={"100px"}
               p={"5px"}
-              fontFamily='StretchPro'
+              
               color={"#EAEAEA"}
               fontSize={"10px"}
               onClick={slide.id === 1 ? onOpen : undefined}
@@ -170,7 +170,7 @@ const Carousel = () => {
                   </Flex>
                   <Button
                     bg={"#ffffff"}
-                    fontFamily='StretchPro'
+                    
                     borderRadius={'100px'}
                     w={"57px"}
                     h={"30px"}
@@ -198,7 +198,7 @@ const Carousel = () => {
               gap={2}
               _hover={{bg: "#297977"}}
             >
-              <Text fontFamily='StretchPro' fontSize={"10px"} fontWeight={400}>
+              <Text  fontSize={"10px"} fontWeight={400}>
                 Claim
               </Text>
               <Text fontSize={"10px"} fontWeight={500} lineHeight={'11.72px'}>

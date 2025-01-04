@@ -116,7 +116,7 @@ const Earn = () => {
         <Text fontSize={"20px"} fontWeight={800} ml={5}>
           Earn
         </Text>
-        <Carousel />
+      
 
         <Text fontSize={"20px"} fontWeight={800} ml={5}>
           Weekly
@@ -155,14 +155,6 @@ const Earn = () => {
               color={"#EAEAEA33"}
               _selected={{ color: "#EAEAEA" }}
             >
-              Academy
-            </Tab>
-            <Tab
-              fontSize={"17px"}
-              fontWeight={500}
-              color={"#EAEAEA33"}
-              _selected={{ color: "#EAEAEA" }}
-            >
               Frens
             </Tab>
             <Tab
@@ -181,9 +173,6 @@ const Earn = () => {
             </TabPanel>
             <TabPanel>
               <Socials />
-            </TabPanel>
-            <TabPanel>
-              <Academy />
             </TabPanel>
             <TabPanel>
               <Ferns task={frensTasks}/>
