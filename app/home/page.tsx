@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Flex, Image, Text, Button } from "@chakra-ui/react";
 import NavigationBar from "../components/NavigationBar";
 import { useUser } from "@/context/context";
+import WeeklyCarousel from "../components/WeeklyCarousel";
 const Home = () => {
   const [timer, setTimer] = useState(0); // Remaining time in seconds
   const [pointsEarned, setPointsEarned] = useState(0);
@@ -193,6 +194,10 @@ const Home = () => {
             </Text>
           </Flex>
         </Box>
+
+        
+          <WeeklyCarousel />
+        
         <Box
           display={"flex"}
           flexDirection={"column"}
