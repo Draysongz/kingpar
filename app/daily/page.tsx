@@ -148,7 +148,7 @@ const Daily = () => {
           <Button
             w={"60%"}
             h={"40px"}
-            fontSize={'10px'}
+            fontSize={'lg'}
             borderRadius={'10px'}
             color={"#001100"}
             bg={"#E1E1E1"}

@@ -195,8 +195,19 @@ const Home = () => {
           </Flex>
         </Box>
 
-        
-          <WeeklyCarousel />
+         <Flex
+        direction={"column"}
+        width="100%"
+        justifyContent="center"
+        overflow="visible"
+        zIndex="1"
+      
+  
+      >
+        <WeeklyCarousel />
+      </Flex>
+
+      
         
         <Box
           display={"flex"}
