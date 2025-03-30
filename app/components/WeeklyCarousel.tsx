@@ -25,9 +25,9 @@ const WeeklyCarousel = () => {
         // Get a mix of tasks from different categories for the weekly carousel
         // Limit to 3 tasks for the carousel
         const selectedTasks = [
-          ...tasks.filter((task) => task.category === "ONCHAIN").slice(0, 1),
-          ...tasks.filter((task) => task.category === "SOCIALS").slice(0, 1),
-          ...tasks.filter((task) => task.category === "FRENS").slice(0, 1),
+          ...tasks.filter((task : any) => task.category === "ONCHAIN").slice(0, 1),
+          ...tasks.filter((task: any) => task.category === "SOCIALS").slice(0, 1),
+          ...tasks.filter((task: any) => task.category === "FRENS").slice(0, 1),
         ].slice(0, 3);
 
         setWeeklyTasks(selectedTasks);
