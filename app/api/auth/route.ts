@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     const { initData, referralCode }: AuthRequestBody = await request.json();
     const referralId = referralCode || null;
 
-    console.log(initData)
+    console.log("gotten init data", initData)
 
     // Step 1: Verify Telegram initData
     const isValid = validateInitData(initData, telegramToken);
@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("validated init data", isValid)
     // Step 2: Extract user information from initData
     const parsedData = new URLSearchParams(initData);
     const userDataJson = parsedData.get("user");
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log("user data json", userDataJson)
     const telegramUser: TelegramUser = JSON.parse(userDataJson);
     const telegramId = telegramUser.id.toString();
     const username = telegramUser.username;
@@ -54,6 +56,7 @@ export async function POST(request: NextRequest) {
     console.log("phot url", photoUrl)
 
     // Step 3: Check if the user already exists
+    console.log("checking if user exists", telegramId)
     let user = await prisma.user.findUnique({
       where: { telegramId },
     });
@@ -70,6 +73,7 @@ export async function POST(request: NextRequest) {
           photoUrl
         },
       });
+      console.log("user created", user)
 
       // Step 5: Handle referral logic if referralId is present
       if (referralId) {

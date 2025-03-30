@@ -30,15 +30,15 @@ export interface TaskResponse {
   rewards: number;
   taskUrl?: string | null;
   status: string;
-  claimed: boolean
-
+  claimed: boolean;
+  completed?: boolean;
 }
 
 const Earn = () => {
   const {user, setUser} = useUser()
   // const [tasks, setTasks] = useState<TaskResponse[]>([]);
     const [onChainTasks, setOnChainTasks] = useState<TaskResponse[]>([]);
-    // const [socialTasks, setSocialTasks] = useState<TaskResponse[]>([]);
+    const [socialTasks, setSocialTasks] = useState<TaskResponse[]>([]);
     // const [academyTasks, setAcademyTasks] = useState<TaskResponse[]>([]);
     const [frensTasks, setFrensTasks] = useState<TaskResponse[]>([]);
     // const [farmingTasks, setFarmingTasks] = useState<TaskResponse[]>([]);
@@ -66,7 +66,7 @@ const Earn = () => {
       //  setTasks(tasksData);
 
        setOnChainTasks(tasksData.filter((task) => task.category === "ONCHAIN"));
-      //  setSocialTasks(tasksData.filter((task) => task.category === "SOCIALS"));
+       setSocialTasks(tasksData.filter((task) => task.category === "SOCIALS"));
       //  setAcademyTasks(tasksData.filter((task) => task.category === "ACADEMY"));
        setFrensTasks(tasksData.filter((task) => task.category === "FRENS"));
       //  setFarmingTasks(tasksData.filter((task) => task.category === "FARMING"));
@@ -172,7 +172,7 @@ const Earn = () => {
               <OnChain task={onChainTasks} />
             </TabPanel>
             <TabPanel>
-              <Socials />
+              <Socials task={socialTasks}/>
             </TabPanel>
             <TabPanel>
               <Ferns task={frensTasks}/>

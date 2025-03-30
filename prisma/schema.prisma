@@ -34,7 +34,7 @@ model User {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   userTasks       UserTask[]
-
+  completedTasks  CompletedTask[]
 }
 
 
@@ -71,6 +71,7 @@ model Task {
   updatedAt   DateTime    @updatedAt
 
   userTasks   UserTask[] // Relation with user tasks
+  completedTasks CompletedTask[]
 }
 
 model UserTask {
@@ -85,6 +86,14 @@ model UserTask {
 
   user        User     @relation(fields: [userId], references: [id])
   task        Task     @relation(fields: [taskId], references: [id])
+}
+
+model CompletedTask {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String @db.ObjectId
+  taskId    String @db.ObjectId
+  user      User   @relation(fields: [userId], references: [id])
+  task      Task   @relation(fields: [taskId], references: [id])
 }
 
 

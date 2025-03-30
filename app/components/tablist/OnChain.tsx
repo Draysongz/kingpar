@@ -7,18 +7,15 @@ import { TaskResponse } from "@/app/earn/page";
 import { useUser } from "@/context/context";
 
 const OnChain = ({ task }: { task: TaskResponse[] }) => {
-  const {user, setUser} = useUser()
+  const { user, setUser } = useUser();
   const { open } = useTonConnectModal();
   const { connected } = useTonConnect();
- 
-
 
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
-  
 
-  useEffect(()=>{
-    setTasks(task)
-  },[task])
+  useEffect(() => {
+    setTasks(task);
+  }, [task]);
 
   // Function to update the claimed status of a task
   const updateTaskClaimed = async (taskId: string) => {
@@ -32,13 +29,20 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to claim task");
+        const errorData = await response.json();
+        console.error("Error claiming task:", errorData.message);
+        return;
       }
 
       const { task: updatedTask, user: updatedUser } = await response.json();
+
+      // Update the local tasks state to reflect the claimed task
       setTasks((prevTasks) =>
-        prevTasks.map((t) => (t.id === updatedTask.id ? updatedTask : t))
+        prevTasks.map((t) =>
+          t.id === taskId ? { ...t, claimed: true, completed: true } : t
+        )
       );
+
       setUser(updatedUser);
     } catch (error) {
       console.error("Error claiming task:", error);
@@ -47,7 +51,7 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
 
   // Determine the button label
   const getButtonLabel = (claimed: boolean) => {
-    if (claimed) return <FaRegCheckCircle size={'15px'}/>;
+    if (claimed) return <FaRegCheckCircle size={"15px"} />;
     return connected ? "Claim" : "Start";
   };
 
@@ -58,14 +62,14 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
       return;
     }
 
-    if (!task.claimed) {
+    if (!task.claimed && !task.completed) {
       // Claim the task
       await updateTaskClaimed(task.id);
     }
   };
 
   return (
-    <Box display={"grid"} w={"100%"} gap={4} fontFamily={'body'}>
+    <Box display={"grid"} w={"100%"} gap={4} fontFamily={"body"}>
       {tasks &&
         tasks.map((box) => (
           <Box
@@ -86,40 +90,50 @@ const OnChain = ({ task }: { task: TaskResponse[] }) => {
                 w={"30px"}
               />
               <Box>
-                <Text fontSize={"15px"} fontWeight={600}>{box.title}</Text>
-                <Text fontSize={"10px"} fontWeight={500}>+{box.rewards} KP</Text>
+                <Text fontSize={"15px"} fontWeight={600}>
+                  {box.title}
+                </Text>
+                <Text fontSize={"10px"} fontWeight={500}>
+                  +{box.rewards} KP
+                </Text>
               </Box>
             </Flex>
             <Button
               width="67px"
-              p={'10px'}
+              p={"10px"}
               height={"30px"}
               borderRadius={"100px"}
               fontSize={"10px"}
-              
               fontWeight={400}
               bg={
-                box.claimed ? "#EAEAEA33" : connected ? "#32EAFF" : "#FFFFFF33"
-              }
-              color={
-                box.claimed ? "#121212" : connected ? "#121212" : "#EAEAEA"
-              }
-              _hover={{
-                bg: box.claimed
+                box.claimed || box.completed
                   ? "#EAEAEA33"
                   : connected
                   ? "#32EAFF"
-                  : "#FFFFFF33",
+                  : "#FFFFFF33"
+              }
+              color={
+                box.claimed || box.completed
+                  ? "#121212"
+                  : connected
+                  ? "#121212"
+                  : "#EAEAEA"
+              }
+              _hover={{
+                bg:
+                  box.claimed || box.completed
+                    ? "#EAEAEA33"
+                    : connected
+                    ? "#32EAFF"
+                    : "#FFFFFF33",
               }}
               onClick={() => handleButtonClick(box)}
-              isDisabled={box.claimed} // Disable button if already claimed
-              _disabled={
-                {
-                  background: "green"
-                }
-              }
+              isDisabled={box.claimed || box.completed} // Disable button if already claimed or completed
+              _disabled={{
+                background: "green",
+              }}
             >
-              {getButtonLabel(box.claimed)}
+              {getButtonLabel(box.claimed || !!box.completed)}
             </Button>
           </Box>
         ))}

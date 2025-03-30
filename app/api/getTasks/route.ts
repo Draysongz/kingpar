@@ -11,6 +11,7 @@ interface TaskResponse {
   taskUrl?: string | null;     // Optional, allow null
   status?: string | null;      // Optional, allow null
   claimed?: boolean;           // Additional field for user-specific progress
+  completed?: boolean;         // New field to track if task is completed
 }
 
 
@@ -34,19 +35,30 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Map tasks to include progress and claim status
-    const tasksWithProgress: TaskResponse[] = tasks.map((task) => {
-      const userTask = userTasks.find((ut) => ut.taskId === task.id);
+    // Fetch completed tasks for this user
+    const completedTasks = await prisma.completedTask.findMany({
+      where: { userId },
+    });
+
+    // Create a set of completed task IDs for quick lookup
+    const completedTaskIds = new Set(completedTasks.map((ct: { taskId: string }) => ct.taskId));
+
+    // Map tasks to include progress, claim status, and completion status
+    const tasksWithProgress: TaskResponse[] = tasks.map((task: { id: string; title: string; description?: string | null; imagePath?: string | null; rewards: number; taskUrl?: string | null; category: string; status?: string | null; }) => {
+      const userTask = userTasks.find((ut: { taskId: string }) => ut.taskId === task.id);
+      const isCompleted = completedTaskIds.has(task.id);
+      
       return {
         id: task.id,
         title: task.title,
-        description: task.description, // Now allows null
+        description: task.description,
         imagePath: task.imagePath,
         rewards: task.rewards,
         taskUrl: task.taskUrl,
         category: task.category,
-        status: task.status, // Add status field if necessary
-        claimed: userTask?.claimed || false,
+        status: task.status,
+        claimed: userTask?.claimed || isCompleted, // Mark as claimed if either userTask is claimed or task is completed
+        completed: isCompleted, // New field to track completion
       };
     });
 

@@ -26,8 +26,7 @@ function HomeContent() {
     }
   }, [currentPage]);
 
-  // const telegramInitData =
-  //   "query_id=AAElBO5_AAAAACUE7n8cjIn7&user=%7B%22id%22%3A2146305061%2C%22first_name%22%3A%22Crypto%22%2C%22last_name%22%3A%22Dray%22%2C%22username%22%3A%22Habibilord%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FxDxhUL3lIVFxD395BqphdSr4obwbuBmLwEzvXuVGMNA.svg%22%7D&auth_date=1733171445&signature=cL8XAHC71aY4ejLNgBtfKfwD_VY22is6o3Tgmks0WGCc9KzecorzpC9b2eqNc3Gmu8zXVK94C6_2to7xszFFBQ&hash=6d3d8d93ad9eee8a7cd490856006415f1cf97a7e47ea9eaa42b9c06b2c12e57b";
+  // const telegramInitData ="query_id=AAElBO5_AAAAACUE7n8cjIn7&user=%7B%22id%22%3A2146305061%2C%22first_name%22%3A%22Crypto%22%2C%22last_name%22%3A%22Dray%22%2C%22username%22%3A%22Habibilord%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FxDxhUL3lIVFxD395BqphdSr4obwbuBmLwEzvXuVGMNA.svg%22%7D&auth_date=1733171445&signature=cL8XAHC71aY4ejLNgBtfKfwD_VY22is6o3Tgmks0WGCc9KzecorzpC9b2eqNc3Gmu8zXVK94C6_2to7xszFFBQ&hash=6d3d8d93ad9eee8a7cd490856006415f1cf97a7e47ea9eaa42b9c06b2c12e57b";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
