@@ -11,25 +11,25 @@ const WeeklyCarousel = () => {
   useEffect(() => {
     const fetchWeeklyTasks = async () => {
       if (!user) return;
-      
+
       try {
         setLoading(true);
         const response = await fetch(`/api/getTasks?userId=${user.id}`);
-        
+
         if (!response.ok) {
           throw new Error("Failed to fetch tasks");
         }
-        
+
         const tasks = await response.json();
-        
+
         // Get a mix of tasks from different categories for the weekly carousel
         // Limit to 3 tasks for the carousel
         const selectedTasks = [
-          ...tasks.filter(task => task.category === "ONCHAIN").slice(0, 1),
-          ...tasks.filter(task => task.category === "SOCIALS").slice(0, 1),
-          ...tasks.filter(task => task.category === "FRENS").slice(0, 1)
+          ...tasks.filter((task) => task.category === "ONCHAIN").slice(0, 1),
+          ...tasks.filter((task) => task.category === "SOCIALS").slice(0, 1),
+          ...tasks.filter((task) => task.category === "FRENS").slice(0, 1),
         ].slice(0, 3);
-        
+
         setWeeklyTasks(selectedTasks);
       } catch (error) {
         console.error("Error fetching weekly tasks:", error);
@@ -37,7 +37,7 @@ const WeeklyCarousel = () => {
         setLoading(false);
       }
     };
-    
+
     fetchWeeklyTasks();
   }, [user]);
 
@@ -48,7 +48,7 @@ const WeeklyCarousel = () => {
       mx="auto"
       borderRadius="md"
       boxShadow="lg"
-      fontFamily={'body'}
+      fontFamily={"body"}
       css={{
         "&::-webkit-scrollbar": {
           display: "none", // Hides the scrollbar for a cleaner look
@@ -94,7 +94,9 @@ const WeeklyCarousel = () => {
                 w={"66px"}
                 h={"34px"}
                 borderRadius={"100px"}
-                border={task.claimed || task.completed ? "5px solid #121212" : ""}
+                border={
+                  task.claimed || task.completed ? "5px solid #121212" : ""
+                }
                 justifyContent={"center"}
                 alignItems={"center"}
               >
